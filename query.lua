@@ -31,9 +31,9 @@ function query.black_list:containsTag(tag)
 end
 
 function query.black_list:compareBlock(block)
-    local contained = self.black_list:containsName(block.name)
+    local contained = self:containsName(block.name)
     for tag, v in pairs(block.tags) do
-        if self.black_list:containsTag(tag) then
+        if self:containsTag(tag) then
             contained = true
         end
     end
