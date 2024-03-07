@@ -91,7 +91,7 @@ function query:move(x, z)
         target_dir = self.direction.SOUTH
     end
 
-    self:turn(direction)
+    self:turn(target_dir)
     if self:mineable() then
         while turtle.detect() do
             turtle.dig()
