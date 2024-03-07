@@ -64,9 +64,14 @@ end
 function query:turn(target_direction)
     if target_direction ~= self.dir then
         print("turning", target_direction, "(currently:", self.dir, ")")
-        for i = self.dir, target_direction do
+        local diff = (target_direction - self.dir) % 4
+        if diff == 1 or diff == -3 then
+            turtle.turnRight()
+        elseif diff == 3 or diff == -1 then
             turtle.turnLeft()
-            print("turning left")
+        elseif diff == 2 or diff == -2 then
+            turtle.turnLeft()
+            turtle.turnLeft()
         end
         self.dir = target_direction
     end
