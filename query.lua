@@ -4,6 +4,7 @@ query = {
     y = 0,
     z = 0,
     dir = 3,
+
     start_position = {
         x = 0,
         y = 0,
@@ -13,6 +14,21 @@ query = {
     black_list = {
         tags = {},
         names = {}
+    },
+
+    working_area = {
+        x = {
+            start = 0,
+            stop = 0
+        },
+        y = {
+            start = 0,
+            stop = 0
+        },
+        z = {
+            start = 0,
+            stop = 0
+        }
     }
 }
 
@@ -50,6 +66,22 @@ function query:setup()
     self.start_position.x = self.x
     self.start_position.y = self.y
     self.start_position.z = self.z
+
+    -- replace later with user input
+    local length = 16
+    local width = 16
+    local start_depth = 63
+    local stop_depth = 62
+
+    -- save dimensions relativ to turtle
+    self.working_area.x.start = self.x
+    self.working_area.x.stop = self.x + width - 1
+
+    self.working_area.y.start = start_depth
+    self.working_area.y.stop = stop_depth
+
+    self.working_area.z.start = self.z
+    self.working_area.z.stop = self.z + length - 1
 end
 
 -- DESCEND
