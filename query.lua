@@ -72,6 +72,7 @@ function query:mineable()
     local mineable = true
     if present then
         mineable = not self.black_list:compareBlock(block)
+        print(block.name, "mineable:", mineable)
     end
 
     return mineable
