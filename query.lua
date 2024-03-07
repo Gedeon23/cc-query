@@ -31,7 +31,7 @@ function query.black_list:containsTag(tag)
 end
 
 function query.black_list:compareBlock(block)
-    contained = self.black_list:containsName(block.name)
+    local contained = self.black_list:containsName(block.name)
     for tag, v in pairs(block.tags) do
         if self.black_list:containsTag(tag) then
             contained = true
@@ -68,9 +68,9 @@ function query:turn(target_direction)
 end
 
 function query:mineable()
-    is_present, block = turtle.inspect()
-    mineable = true
-    if is_present then
+    local present, block = turtle.inspect()
+    local mineable = true
+    if present then
         mineable = not self.black_list:compareBlock(block)
     end
 
@@ -81,6 +81,7 @@ end
 -- this function only handles a single block movement
 -- returns wether the move was successful
 function query:move(x, z)
+    local target_dir
     if x > 0 then
         target_dir = self.direction.EAST
     elseif x < 0 then
