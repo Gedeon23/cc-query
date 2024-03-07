@@ -71,7 +71,7 @@ function query:mineable()
     is_present, block = turtle.inspect()
     mineable = true
     if is_present then
-        mineable = not black_list:compareBlock(block)
+        mineable = not self.black_list:compareBlock(block)
     end
 
     return mineable
