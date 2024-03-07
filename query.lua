@@ -1,12 +1,12 @@
 query = {
-    direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4}
-    x, y, z = gps.locate()
-    dir = direction.SOUTH
+    direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
+    x, y, z = gps.locate(),
+    dir = direction.SOUTH,
     start_position = {
         x = self.x,
         y = self.y,
         z = self.z
-    }
+    },
 
     black_list = {
         tags = {},
