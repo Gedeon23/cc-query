@@ -1,11 +1,11 @@
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
     x, y, z = gps.locate(),
-    dir = self.direction.SOUTH,
+    dir = 3,
     start_position = {
-        x = self.x,
-        y = self.y,
-        z = self.z
+        x = 0,
+        y = 0,
+        z = 0, 
     },
 
     black_list = {
@@ -42,6 +42,12 @@ end
 
 
 query.black_list:addTag("c:ores")
+
+function query:setup() {
+    self.start_position.x = self.x
+    self.start_position.y = self.y
+    self.start_position.z = self.z
+}
 
 -- DESCEND
 function query:descendToWorkingArea()
@@ -102,13 +108,14 @@ function query:move(x, z)
 end
 
 function test()
-    move(0,1)
-    move(0,1)
-    move(1,0)
-    move(0,-1)
-    move(0,-1)
+    query:move(0,1)
+    query:move(0,1)
+    query:move(1,0)
+    query:move(0,-1)
+    query:move(0,-1)
 end
 
+query:setup()
 test()
 
 
