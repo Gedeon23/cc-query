@@ -43,11 +43,11 @@ end
 
 query.black_list:addTag("c:ores")
 
-function query:setup() {
+function query:setup()
     self.start_position.x = self.x
     self.start_position.y = self.y
     self.start_position.z = self.z
-}
+end
 
 -- DESCEND
 function query:descendToWorkingArea()
