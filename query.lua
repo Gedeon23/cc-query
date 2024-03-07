@@ -1,6 +1,8 @@
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
-    x, y, z = gps.locate(),
+    x = 0,
+    y = 0,
+    z = 0,
     dir = 3,
     start_position = {
         x = 0,
@@ -44,6 +46,7 @@ end
 query.black_list:addTag("c:ores")
 
 function query:setup()
+    self.x, self.y, self.z = gps.locate()
     self.start_position.x = self.x
     self.start_position.y = self.y
     self.start_position.z = self.z
