@@ -63,6 +63,7 @@ end
 
 function query:turn(target_direction)
     if target_direction ~= self.dir then
+        print("turning", target_direction, "(currently:", self.dir, ")")
         for i = self.dir, target_direction do
             turtle.turnLeft()
         end
