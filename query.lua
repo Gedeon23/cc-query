@@ -1,7 +1,7 @@
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
     x, y, z = gps.locate(),
-    dir = direction.SOUTH,
+    dir = self.direction.SOUTH,
     start_position = {
         x = self.x,
         y = self.y,
