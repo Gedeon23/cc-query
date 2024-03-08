@@ -218,9 +218,11 @@ function query:astarToLocation(x,z)
     end
 
     function minPotentialDistance(paths)
+        print("searching for minimal path")
         local min = paths[1]
         local index = 1
         for i, path in pairs(paths) do
+            print("min:", min, "comparing to", path)
             if min.length + min.distance > path.length + path.distance then
                 min = path
                 index = i
