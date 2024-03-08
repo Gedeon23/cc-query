@@ -232,6 +232,7 @@ function query:astarToLocation(x,z)
             table.insert(new_path.route, edge)
             print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ")" )
             table.insert(paths, new_path)
+            os.sleep(1)
         end
 
         table.remove(paths, index)
@@ -255,6 +256,7 @@ function query:astarToLocation(x,z)
         local index, path = minPotentialDistance(paths)
 
         if path.destination.x == x and path.destination.z == z then
+            print("found solution", path, "going to", path.destination.x, path.destination.z)
             return path
         end
 
