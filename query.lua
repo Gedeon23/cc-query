@@ -269,7 +269,10 @@ end
 
 
 function test()
-    query:astarToLocation(-2717, 306)
+    local path = query:astarToLocation(-2717, 306)
+    for i, vec in pairs(path.route) do
+        query:move(vec[1], vec[2])
+    end
 end
 
 query:setup()
