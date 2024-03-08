@@ -170,7 +170,6 @@ function query:withinWorkingArea(x, y, z)
     print("within z range", within_z_range)
     within_working_area = within_x_range and within_y_range and within_z_range
     print("is within working area?", within_working_area)
-    os.sleep(2)
     return within_working_area
 end
 
