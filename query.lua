@@ -243,7 +243,9 @@ function query:astarToLocation(x,z)
         local min = paths[1]
         local index = 1
         for i, path in pairs(paths) do
-            if min.length + min.distance > path.length + path.distance then
+            local minVal = min.length + min.distance
+            local currentVal = path.length + path.distance
+            if minVal > currentVal then
                 print("min found:", path)
                 min = path
                 index = i
@@ -257,10 +259,10 @@ function query:astarToLocation(x,z)
 
         if path.destination.x == x and path.destination.z == z then
             print("found solution", path, "going to", path.destination.x, path.destination.z)
-            print("Route:")
-            for vec in path.route do
-                print(vec[1], vec[2])
-            end
+            -- print("Route:")
+            -- for i, vec in pairs(path.route) do
+            --     print(vec[1], vec[2])
+            -- end
 
             return path
         end
