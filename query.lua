@@ -78,13 +78,19 @@ function query:setup()
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
+    print("starting at x =", self.working_area.x.start)
     self.working_area.x.stop = self.x + width - 1
+    print("stopping at x =", self.working_area.x.stop)
 
     self.working_area.y.start = start_depth
     self.working_area.y.stop = stop_depth
 
     self.working_area.z.start = self.z
+    print("starting at z =", self.working_area.z.start)
     self.working_area.z.stop = self.z + length - 1
+    print("stopping at z =", self.working_area.z.stop)
+
+    os.sleep(4)
 end
 
 -- DESCEND
