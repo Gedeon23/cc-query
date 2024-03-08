@@ -257,6 +257,11 @@ function query:astarToLocation(x,z)
 
         if path.destination.x == x and path.destination.z == z then
             print("found solution", path, "going to", path.destination.x, path.destination.z)
+            print("Route:")
+            for vec in path.route do
+                print(vec[1], vec[2])
+            end
+
             return path
         end
 
