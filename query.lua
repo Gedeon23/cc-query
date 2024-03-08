@@ -65,7 +65,7 @@ end
 query.black_list:addTag("c:ores")
 
 function query:setup()
-    self.x, self.y, self.z = gps.locate()
+    self.x, self.z, self.y = gps.locate()
     self.start_position.x = self.x
     self.start_position.y = self.y
     self.start_position.z = self.z
