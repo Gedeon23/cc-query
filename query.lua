@@ -196,7 +196,8 @@ function query:getPossibleEdges(x,z)
         end
 
         if self:withinWorkingArea(cords.x, self.y, cords.z) and mineable then
-            possible_edges[cords] = true
+            table.insert(possible_edges, edge)
+            print("found possible edge for", x, z, ": (", edge[1], edge[2], ")")
         end
     end
 
@@ -214,7 +215,7 @@ function query:astarToLocation(x,z)
 
     function expandPath(index, path)
         print("expanding path", path)
-        for edge, v in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
+        for i, edge in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
             print("possible edge", edge.x, edge.z)
             local new_dest = {x = path.destination.x + edge.x, z = path.destination.z + edge.z}
             local new_path = {
