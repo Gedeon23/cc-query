@@ -29,9 +29,9 @@ query = {
             start = 0,
             stop = 0
         }
-    }
+    },
 
-    mining_queue = {}
+    mining_queue = {},
     unmineable_blocks = {}
 }
 
@@ -150,7 +150,7 @@ function query:move(x, z)
 
         return true
     else
-        self.unmineable_blocks[self.x + x, self.y, self.z + z] = true
+        self.unmineable_blocks[{x = self.x + x, y = self.y, z = self.z + z}] = true
         return false
     end
 end
@@ -182,8 +182,8 @@ function query:getPossibleEdges(x,z)
     local edges = {{0,1}, {0,-1}, {1,0}, {-1,0}}
     local possible_edges = {}
 
-    for i, vector in pairs(vectors) do
-        local cords = {x = self.x + vector[1], z = self.z + vector[2]}
+    for i, edge in pairs(edges) do
+        local cords = {x = self.x + edge[1], z = self.z + edge[2]}
         if self:withinWorkingArea(cords.x, cords.z) and not self.unmineable_blocks[cords] then
             possible_edges[cords] = true
         end
