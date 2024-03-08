@@ -230,7 +230,7 @@ function query:astarToLocation(x,z)
                 destination = new_dest
             }
             table.insert(new_path.route, edge)
-            print("found new path", new_path)
+            print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ")" )
             table.insert(paths, new_path)
         end
 
