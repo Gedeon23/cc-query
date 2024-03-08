@@ -190,7 +190,12 @@ function query:getPossibleEdges(x,z)
 
     for i, edge in pairs(edges) do
         local cords = {x = self.x + edge[1], z = self.z + edge[2]}
-        if self:withinWorkingArea(cords.x, self.y, cords.z) and not self.unmineable_blocks[cords] then
+        local mineable = true
+        if self.unmineable_blocks[cords] then
+            mineable = false
+        end
+
+        if self:withinWorkingArea(cords.x, self.y, cords.z) and mineable then
             possible_edges[cords] = true
         end
     end
