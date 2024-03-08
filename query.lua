@@ -223,7 +223,7 @@ function query:astarToLocation(x,z)
         print("expanding path", path)
         for i, edge in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
             print("possible edge", edge.x, edge.z)
-            local new_dest = {x = path.destination.x + edge.x, z = path.destination.z + edge.z}
+            local new_dest = {x = path.destination.x + edge[1], z = path.destination.z + edge[2]}
             local new_path = {
                 length = path.length + 1,
                 distance = dist(x, z, new_dest.x, new_dest.z),
