@@ -30,6 +30,9 @@ query = {
             stop = 0
         }
     }
+
+    mining_queue = {}
+    unmineable_blocks = {}
 }
 
 function query.black_list:addName(name)
@@ -147,9 +150,101 @@ function query:move(x, z)
 
         return true
     else
+        self.unmineable_blocks[self.x + x, self.y, self.z + z] = true
         return false
     end
 end
+
+function query:withinWorkingArea(x, y, z)
+    local within_x_range = x >= self.working_area.x.start and x <= self.working_area.x.stop
+    local within_y_range = y >= self.working_area.y.start and y <= self.working_area.y.stop
+    local within_z_range = z >= self.working_area.z.start and z <= self.working_area.z.stop
+    return within_x_range and withing_y_range and withing_z_range
+end
+
+-- function query.current_layer:addBlock(x ,z)
+
+-- end
+
+-- function query:setupLayer()
+--     for x = self.working_area.x.start, self.working_area.x.stop do
+--         for z = self.working_area.z.start, self.working_area.z.stop do
+--             self.current_layer:addBlock(x,z)
+--         end
+--     end
+-- end
+
+function dist(x1, z1, x2, z2)
+    return math.sqrt(math.pow(x1-x2, 2) + math.pow(z1-z2, 2))
+end
+
+function query:getPossibleEdges(x,z)
+    local edges = {{0,1}, {0,-1}, {1,0}, {-1,0}}
+    local possible_edges = {}
+
+    for i, vector in pairs(vectors) do
+        local cords = {x = self.x + vector[1], z = self.z + vector[2]}
+        if self:withinWorkingArea(cords.x, cords.z) and not self.unmineable_blocks[cords] then
+            possible_edges[cords] = true
+        end
+    end
+
+    return possible_edges
+end
+
+
+function query:astarToLocation(x,z)
+    local paths = {{
+        length = 0,
+        distance = dist(x,z, self.x, self.z),
+        route = {},
+        destination = {x = self.x, z = self.z}
+    }}
+
+    function expandPath(path)
+        for edge, v in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
+            local new_dest = {x = path.destination.x + edge.x, z = path.destination.z + edge.z}
+            local new_path = {
+                length = path.length + 1,
+                distance = dist(x, z, new_dest.x, new_dest.z),
+                route = path.route,
+                destination = new_dest
+            }
+            table.insert(new_path.route, edge)
+            table.insert(paths, new_path)
+        end
+
+        table.remove(paths, path)
+    end
+
+    function minPotentialDistance(paths)
+        local min = paths[1]
+        local index = 1
+        for i, path in pairs(paths) do
+            if min.length + min.distance > path.length + path.distance then
+                min = path
+                index = i
+            end
+        end
+        return index, min
+    end
+
+    while true do
+        local index, path = minPotentialDistance(paths)
+
+        if path.destination.x == x and path.destination.z == z then
+            return path
+        end
+
+        expandPath(path)
+    end
+end
+        
+
+function query:excavate_layer()
+end
+
+
 
 function test()
     query:move(0,1)
@@ -161,7 +256,6 @@ end
 
 query:setup()
 test()
-
 
 
 
