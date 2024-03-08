@@ -184,7 +184,7 @@ function query:getPossibleEdges(x,z)
 
     for i, edge in pairs(edges) do
         local cords = {x = self.x + edge[1], z = self.z + edge[2]}
-        if self:withinWorkingArea(cords.x, cords.z) and not self.unmineable_blocks[cords] then
+        if self:withinWorkingArea(cords.x, self.y, cords.z) and not self.unmineable_blocks[cords] then
             possible_edges[cords] = true
         end
     end
@@ -201,7 +201,7 @@ function query:astarToLocation(x,z)
         destination = {x = self.x, z = self.z}
     }}
 
-    function expandPath(path)
+    function expandPath(index, path)
         for edge, v in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
             local new_dest = {x = path.destination.x + edge.x, z = path.destination.z + edge.z}
             local new_path = {
@@ -214,7 +214,7 @@ function query:astarToLocation(x,z)
             table.insert(paths, new_path)
         end
 
-        table.remove(paths, path)
+        table.remove(paths, index)
     end
 
     function minPotentialDistance(paths)
@@ -236,7 +236,7 @@ function query:astarToLocation(x,z)
             return path
         end
 
-        expandPath(path)
+        expandPath(index, path)
     end
 end
         
@@ -247,11 +247,7 @@ end
 
 
 function test()
-    query:move(0,1)
-    query:move(0,1)
-    query:move(1,0)
-    query:move(0,-1)
-    query:move(0,-1)
+    query:astarToLocation(-2717, 306)
 end
 
 query:setup()
