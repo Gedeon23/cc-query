@@ -202,6 +202,7 @@ function query:astarToLocation(x,z)
     }}
 
     function expandPath(index, path)
+        print("expanding path", table.toString(path))
         for edge, v in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
             local new_dest = {x = path.destination.x + edge.x, z = path.destination.z + edge.z}
             local new_path = {
@@ -211,6 +212,7 @@ function query:astarToLocation(x,z)
                 destination = new_dest
             }
             table.insert(new_path.route, edge)
+            print("found new path", table.toString(new_path))
             table.insert(paths, new_path)
         end
 
