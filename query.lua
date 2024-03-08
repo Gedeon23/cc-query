@@ -165,7 +165,9 @@ function query:withinWorkingArea(x, y, z)
     local within_x_range = x >= self.working_area.x.start and x <= self.working_area.x.stop
     local within_y_range = y >= self.working_area.y.start and y <= self.working_area.y.stop
     local within_z_range = z >= self.working_area.z.start and z <= self.working_area.z.stop
-    return within_x_range and withing_y_range and withing_z_range
+    within_working_area = within_x_range and withing_y_range and withing_z_range
+    print("is within working area?", within_working_area)
+    return within_working_area
 end
 
 -- function query.current_layer:addBlock(x ,z)
