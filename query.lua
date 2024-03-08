@@ -230,7 +230,7 @@ function query:astarToLocation(x,z)
                 destination = new_dest
             }
             table.insert(new_path.route, edge)
-            print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ")" )
+            print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ") with length:", new_path.length )
             table.insert(paths, new_path)
             os.sleep(1)
         end
@@ -243,8 +243,8 @@ function query:astarToLocation(x,z)
         local min = paths[1]
         local index = 1
         for i, path in pairs(paths) do
-            print("min:", min, "comparing to", path)
             if min.length + min.distance > path.length + path.distance then
+                print("min found:", path)
                 min = path
                 index = i
             end
