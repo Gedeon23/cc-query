@@ -227,9 +227,12 @@ function query:astarToLocation(x,z)
             local new_path = {
                 length = path.length + 1,
                 distance = dist(x, z, new_dest.x, new_dest.z),
-                route = path.route,
+                route = {},
                 destination = new_dest
             }
+            for _, route_edge in ipairs(path.route) do
+                table.insert(new_path.route, route_edge)
+            end
             table.insert(new_path.route, edge)
             print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ") with length:", new_path.length )
             table.insert(paths, new_path)
@@ -261,7 +264,7 @@ function query:astarToLocation(x,z)
 
     while true do
         local index, path = minPotentialDistance() -- this does not return the correct thing
-        print("found path with minimal distance/length")
+        print("found path with minimal distance/length index =", index)
 
         if path.destination.x == x and path.destination.z == z then
             print("found solution", path, "going to", path.destination.x, path.destination.z, "after", iteration_counter, "iterations")
