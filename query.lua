@@ -221,7 +221,7 @@ function query:astarToLocation(x,z)
     function expandPath(index, path)
         print("expanding path", path)
         for i, edge in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
-            print("possible edge", edge.x, edge.z)
+            print("possible edge", edge[1], edge[2])
             local new_dest = {x = path.destination.x + edge[1], z = path.destination.z + edge[2]}
             local new_path = {
                 length = path.length + 1,
@@ -257,6 +257,7 @@ function query:astarToLocation(x,z)
 
     while true do
         local index, path = minPotentialDistance()
+        print("found path with minimal distance/length")
 
         if path.destination.x == x and path.destination.z == z then
             print("found solution", path, "going to", path.destination.x, path.destination.z)
