@@ -237,7 +237,7 @@ function query:astarToLocation(x,z)
             print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ") with length:", new_path.length )
 
             if new_path.destination.x == x and new_path.destination.z == z then
-                return true, path
+                return true, new_path
             end
             table.insert(paths, new_path)
             os.sleep(1)
@@ -285,7 +285,7 @@ end
 
 
 function test()
-    local path = query:astarToLocation(-2718, 304)
+    local path = query:astarToLocation(-2717, 306)
     for i, vec in pairs(path.route) do
         query:move(vec[1], vec[2])
     end
