@@ -186,7 +186,7 @@ end
 -- end
 
 function dist(x1, z1, x2, z2)
-    return math.sqrt(math.pow(x1-x2, 2) + math.pow(z1-z2, 2))
+    return math.abs(x1-x2) + math.abs(z1-z2)
 end
 
 function query:getPossibleEdges(x,z)
@@ -245,6 +245,7 @@ function query:astarToLocation(x,z)
         for i, path in pairs(paths) do
             local minVal = min.length + min.distance
             local currentVal = path.length + path.distance
+            print("min val", minVal, "vs currentVal", currentVal)
             if minVal > currentVal then
                 print("min found:", path)
                 min = path
