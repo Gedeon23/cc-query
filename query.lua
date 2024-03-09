@@ -278,8 +278,8 @@ end
 
 function query:excavateLayer()
     local mining_queue = {}
-    for x in self.working_area.x.start, self.working_area.x.stop do
-        for z in self.working_area.z.start, self.working_area.z.stop do
+    for x = self.working_area.x.start, self.working_area.x.stop do
+        for z = self.working_area.z.start, self.working_area.z.stop do
             table.insert(mining_queue, {x,z})
         end
     end
@@ -297,12 +297,13 @@ function query:excavateLayer()
         return index, min
     end
 
-    while mining_queue[1] == nil do
+    while mining_queue[1] ~= nil do
         local index, target = getClosestFromQueue()
         local path = self:astarToLocation(target[1], target[2])
         for i, vec in pairs(path.route) do
             query:move(vec[1], vec[2])
         end
+        table.remove(mining_queue, index)
     end
 
 end
