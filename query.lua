@@ -238,7 +238,7 @@ function query:astarToLocation(x,z)
         table.remove(paths, index)
     end
 
-    function minPotentialDistance(paths)
+    function minPotentialDistance()
         print("searching for minimal path")
         local min = paths[1]
         local index = 1
@@ -256,7 +256,7 @@ function query:astarToLocation(x,z)
     end
 
     while true do
-        local index, path = minPotentialDistance(paths)
+        local index, path = minPotentialDistance()
 
         if path.destination.x == x and path.destination.z == z then
             print("found solution", path, "going to", path.destination.x, path.destination.z)
