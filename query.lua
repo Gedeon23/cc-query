@@ -220,7 +220,8 @@ function query:astarToLocation(x,z)
 
     function expandPath(index, path)
         print("expanding path", path)
-        for i, edge in pairs(self:getPossibleEdges(path.destination.x, path.destination.z)) do
+        local edges = self:getPossibleEdges(path.destination.x, path.destination.z)
+        for _, edge in ipairs(edges) do
             print("possible edge", edge[1], edge[2])
             local new_dest = {x = path.destination.x + edge[1], z = path.destination.z + edge[2]}
             local new_path = {
@@ -285,7 +286,7 @@ end
 
 
 function test()
-    local path = query:astarToLocation(-2717, 306)
+    local path = query:astarToLocation(-2718, 304)
     for i, vec in pairs(path.route) do
         query:move(vec[1], vec[2])
     end
