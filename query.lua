@@ -72,8 +72,8 @@ function query:setup()
     -- replace later with user input
     local length = 16
     local width = 16
-    local start_depth = 63
-    local stop_depth = 62
+    local start_depth = 5
+    local stop_depth = -5
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
@@ -171,18 +171,6 @@ function query:withinWorkingArea(x, y, z)
     print("is within working area?", within_working_area)
     return within_working_area
 end
-
--- function query.current_layer:addBlock(x ,z)
-
--- end
-
--- function query:setupLayer()
---     for x = self.working_area.x.start, self.working_area.x.stop do
---         for z = self.working_area.z.start, self.working_area.z.stop do
---             self.current_layer:addBlock(x,z)
---         end
---     end
--- end
 
 function dist(x1, z1, x2, z2)
     return math.abs(x1-x2) + math.abs(z1-z2)
@@ -323,7 +311,12 @@ end
 
 
 function test()
-    query:excavateLayer()
+    query:descendToWorkingArea()
+    for y = query.working_area.y.start, query.working_area.y.stop do
+        query:excavateLayer()
+        turtle.digDown()
+        turtle.down()
+    end
 end
 
 query:setup()
