@@ -297,13 +297,24 @@ function query:excavateLayer()
         return index, min
     end
 
+    function removeFromMiningQueue(x,z)
+        for i, block in pairs(mining_queue) do
+            if block[1] == x and block[2] == z then
+                table.remove(mining_queue, i)
+            end
+        end
+    end
+
     while mining_queue[1] ~= nil do
         local index, target = getClosestFromQueue()
         local path = self:astarToLocation(target[1], target[2])
         for i, vec in pairs(path.route) do
-            query:move(vec[1], vec[2])
+            removeFromMiningQueue(self.x + vec[1], self.z + vec[2])
+            local success = query:move(vec[1], vec[2])
+            if not success then
+                self.unmineable_blocks[{self.x + vec[1], self.y, self.z + vec[2]}] = true
+            end
         end
-        table.remove(mining_queue, index)
     end
 
 end
