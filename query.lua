@@ -235,11 +235,16 @@ function query:astarToLocation(x,z)
             end
             table.insert(new_path.route, edge)
             print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ") with length:", new_path.length )
+
+            if new_path.destination.x == x and new_path.destination.z == z then
+                return true, path
+            end
             table.insert(paths, new_path)
             os.sleep(1)
         end
 
         table.remove(paths, index)
+        return false, nil
     end
 
     function minPotentialDistance()
@@ -260,25 +265,16 @@ function query:astarToLocation(x,z)
         return index, min
     end
 
-    local iteration_counter = 1
-
     while true do
         local index, path = minPotentialDistance() -- this does not return the correct thing
         print("found path with minimal distance/length index =", index)
 
-        if path.destination.x == x and path.destination.z == z then
-            print("found solution", path, "going to", path.destination.x, path.destination.z, "after", iteration_counter, "iterations")
-            os.sleep(2)
-            -- print("Route:")
-            -- for i, vec in pairs(path.route) do
-            --     print(vec[1], vec[2])
-            -- end
 
-            return path
+        local found, solution = expandPath(index, path)
+
+        if found then
+            return solution
         end
-
-        expandPath(index, path)
-        iteration_counter = iteration_counter + 1
     end
 end
         
