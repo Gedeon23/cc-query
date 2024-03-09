@@ -255,12 +255,14 @@ function query:astarToLocation(x,z)
         return index, min
     end
 
+    local iteration_counter = 1
+
     while true do
         local index, path = minPotentialDistance()
         print("found path with minimal distance/length")
 
         if path.destination.x == x and path.destination.z == z then
-            print("found solution", path, "going to", path.destination.x, path.destination.z)
+            print("found solution", path, "going to", path.destination.x, path.destination.z, "after", iteration_counter, "iterations")
             -- print("Route:")
             -- for i, vec in pairs(path.route) do
             --     print(vec[1], vec[2])
@@ -270,6 +272,7 @@ function query:astarToLocation(x,z)
         end
 
         expandPath(index, path)
+        iteration_counter = iteration_counter + 1
     end
 end
         
