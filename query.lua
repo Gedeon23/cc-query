@@ -31,7 +31,6 @@ query = {
         }
     },
 
-    mining_queue = {},
     unmineable_blocks = {}
 }
 
@@ -277,16 +276,41 @@ function query:astarToLocation(x,z)
 end
         
 
-function query:excavate_layer()
+function query:excavateLayer()
+    local mining_queue = {}
+    for x in self.working_area.x.start, self.working_area.x.stop do
+        for z in self.working_area.z.start, self.working_area.z.stop do
+            table.insert(mining_queue, {x,z})
+        end
+    end
+
+    function getClosestFromQueue()
+        local index = 1
+        local min = mining_queue[index]
+        for i, block in ipairs(mining_queue) do
+            if dist(self.x, self.z, min[1], min[2]) > dist(self.x, self.z, block[1], block[2]) then
+                min = block
+                index = i
+            end
+        end
+
+        return index, min
+    end
+
+    while mining_queue[1] == nil do
+        local index, target = getClosestFromQueue()
+        local path = self:astarToLocation(target[1], target[2])
+        for i, vec in pairs(path.route) do
+            query:move(vec[1], vec[2])
+        end
+    end
+
 end
 
 
 
 function test()
-    local path = query:astarToLocation(-2717, 306)
-    for i, vec in pairs(path.route) do
-        query:move(vec[1], vec[2])
-    end
+    query:excavateLayer()
 end
 
 query:setup()
