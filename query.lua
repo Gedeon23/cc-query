@@ -240,7 +240,6 @@ function query:astarToLocation(x,z)
                 return true, new_path
             end
             table.insert(paths, new_path)
-            os.sleep(1)
         end
 
         table.remove(paths, index)
@@ -261,7 +260,6 @@ function query:astarToLocation(x,z)
                 index = i
             end
         end
-        os.sleep(2)
         return index, min
     end
 
