@@ -72,8 +72,8 @@ function query:setup()
     -- replace later with user input
     local length = 16
     local width = 16
-    local start_depth = 5
-    local stop_depth = -5
+    local start_depth = 62
+    local stop_depth = -61
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
@@ -94,7 +94,7 @@ end
 
 -- DESCEND
 function query:descendToWorkingArea()
-    for i = self.y, self.working_area.y.start, -1 do
+    for i = self.y, self.working_area.y.start + 1, -1 do
         turtle.digDown()
         turtle.down()
         self.y = self.y - 1
@@ -301,7 +301,6 @@ function query:excavateLayer()
             removeFromMiningQueue(self.x + vec[1], self.z + vec[2])
             local success = query:move(vec[1], vec[2])
             if not success then
-                self.unmineable_blocks[{self.x + vec[1], self.y, self.z + vec[2]}] = true
                 break
             end
         end
