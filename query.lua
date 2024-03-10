@@ -94,7 +94,7 @@ end
 
 -- DESCEND
 function query:descendToWorkingArea()
-    for i = y, ystart, -1 do
+    for i = self.y, self.working_area.y.start, -1 do
         turtle.digDown()
         turtle.down()
         self.y = self.y - 1
@@ -312,7 +312,7 @@ end
 
 function test()
     query:descendToWorkingArea()
-    for y = query.working_area.y.start, query.working_area.y.stop do
+    for y = query.working_area.y.start, query.working_area.y.stop, -1 do
         query:excavateLayer()
         turtle.digDown()
         turtle.down()
