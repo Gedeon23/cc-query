@@ -312,7 +312,7 @@ end
 
 function test()
     query:descendToWorkingArea()
-    for y = query.working_area.y.start, query.working_area.y.stop, -1 do
+    for y = query.working_area.y.start, query.working_area.y.stop + 1, -1 do
         query:excavateLayer()
         turtle.digDown()
         turtle.down()
