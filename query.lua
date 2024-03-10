@@ -302,6 +302,7 @@ function query:excavateLayer()
             local success = query:move(vec[1], vec[2])
             if not success then
                 self.unmineable_blocks[{self.x + vec[1], self.y, self.z + vec[2]}] = true
+                break
             end
         end
     end
