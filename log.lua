@@ -18,14 +18,15 @@ function log(...)
 end
 
 function listToString(list)
-    result = ""
-    seperator = " "
+    local result = ""
+    local seperator = ""
     for i, v in pairs(list) do
         if type(v) == "table" then
-            results = result..seperator..tableToString(v)
+            result = result..seperator..tableToString(v)
         else
             result = result..seperator..tostring(v)
         end
+        seperator = " "
     end
 
     return result
