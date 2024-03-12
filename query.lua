@@ -212,7 +212,7 @@ function query:astarToLocation(x,z)
     }}
 
     function expandPath(index, path)
-        log("expanding path: "..path)
+        log("expanding path:", path)
         local edges = self:getPossibleEdges(path.destination.x, path.destination.z)
         for _, edge in ipairs(edges) do
             log("possible edge ("..edge[1].." "..edge[2]..")")
@@ -227,7 +227,7 @@ function query:astarToLocation(x,z)
                 table.insert(new_path.route, route_edge)
             end
             table.insert(new_path.route, edge)
-            log("found new path "..new_path.." leading to ("..new_path.destination.x.." "..new_path.destination.z..") with length: "..new_path.length)
+            log("found new path", new_path, "leading to ("..new_path.destination.x, new_path.destination.z..") with length:", new_path.length)
 
             if new_path.destination.x == x and new_path.destination.z == z then
                 return true, new_path
@@ -248,7 +248,7 @@ function query:astarToLocation(x,z)
             local currentVal = path.length + path.distance
             log("min val: "..minVal.." vs currentVal: "..currentVal)
             if minVal > currentVal then
-                log("min found: "..path)
+                log("min found:", path)
                 min = path
                 index = i
             end
