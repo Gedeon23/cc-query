@@ -1,3 +1,5 @@
+local log = require("log")
+
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
     x = 0,
@@ -69,6 +71,9 @@ function query:setup()
     self.start_position.y = self.y
     self.start_position.z = self.z
 
+    -- coms
+    rednet.open("right")
+
     -- replace later with user input
     local length = 16
     local width = 16
@@ -77,17 +82,17 @@ function query:setup()
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
-    print("starting at x =", self.working_area.x.start)
+    log("starting at x = "..self.working_area.x.start)
     self.working_area.x.stop = self.x + width - 1
-    print("stopping at x =", self.working_area.x.stop)
+    log("stopping at x = "..self.working_area.x.stop)
 
     self.working_area.y.start = start_depth
     self.working_area.y.stop = stop_depth
 
     self.working_area.z.start = self.z
-    print("starting at z =", self.working_area.z.start)
+    log("starting at z = "..self.working_area.z.start)
     self.working_area.z.stop = self.z + length - 1
-    print("stopping at z =", self.working_area.z.stop)
+    log("stopping at z = "..self.working_area.z.stop)
 
     os.sleep(4)
 end
