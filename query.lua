@@ -127,7 +127,7 @@ function query:mineable()
     local mineable = true
     if present then
         mineable = not self.black_list:compareBlock(block)
-        log(block.name.." mineable: "..mineable)
+        log(block.name.." mineable: ", mineable)
     end
 
     return mineable
@@ -167,13 +167,13 @@ end
 
 function query:withinWorkingArea(x, y, z)
     local within_x_range = x >= self.working_area.x.start and x <= self.working_area.x.stop
-    log("within x range "..within_x_range)
+    log("within x range ", within_x_range)
     local within_y_range = y <= self.working_area.y.start and y >= self.working_area.y.stop
-    log("within y range "..within_y_range)
+    log("within y range ", within_y_range)
     local within_z_range = z >= self.working_area.z.start and z <= self.working_area.z.stop
-    log("within z range "..within_z_range)
+    log("within z range ", within_z_range)
     within_working_area = within_x_range and within_y_range and within_z_range
-    log("is "..x.." "..y.." "..z.." within working area? "..within_working_area)
+    log("is "..x.." "..y.." "..z.." within working area?", within_working_area)
     return within_working_area
 end
 
