@@ -24,7 +24,7 @@ function listToString(list)
         if type(v) == "table" then
             results = result..seperator..tableToString(v)
         else
-            result = result..seperator..v
+            result = result..seperator..tostring(v)
         end
     end
 
@@ -36,11 +36,11 @@ function tableToString(tbl)
     local result = "{"
     local seperator = ""
     for k, v in pairs(tbl) do
-        result = result..seperator..k..": "
+        result = result..seperator..tostring(k)..": "
         if type(v) == "table" then
             result = result..tableToString(v)
         else
-            result = result..v
+            result = result..tostring(v)
         end
         seperator = ", "
     end
