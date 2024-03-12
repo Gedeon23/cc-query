@@ -1,10 +1,11 @@
 function log(message)
     local logfile = "/log.txt"
+    local file
 
-    if fs.exists(logfilfe) then
-        local file = fs.open(logfile, "a")
+    if fs.exists(logfile) then
+        file = fs.open(logfile, "a")
     else
-        local file = fs.open(logfile, "w")
+        file = fs.open(logfile, "w")
     end
 
     print(message)
