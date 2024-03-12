@@ -108,7 +108,7 @@ end
 
 function query:turn(target_direction)
     if target_direction ~= self.dir then
-        print("turning", target_direction, "(currently:", self.dir, ")")
+        log("turning "..target_direction.." (currently: "..self.dir..")")
         local diff = (target_direction - self.dir) % 4
         if diff == 1 or diff == -3 then
             turtle.turnRight()
@@ -127,7 +127,7 @@ function query:mineable()
     local mineable = true
     if present then
         mineable = not self.black_list:compareBlock(block)
-        print(block.name, "mineable:", mineable)
+        log(block.name.." mineable: "..mineable)
     end
 
     return mineable
@@ -167,13 +167,13 @@ end
 
 function query:withinWorkingArea(x, y, z)
     local within_x_range = x >= self.working_area.x.start and x <= self.working_area.x.stop
-    print("within x range", within_x_range)
+    log("within x range "..within_x_range)
     local within_y_range = y <= self.working_area.y.start and y >= self.working_area.y.stop
-    print("within y range", within_y_range)
+    log("within y range "..within_y_range)
     local within_z_range = z >= self.working_area.z.start and z <= self.working_area.z.stop
-    print("within z range", within_z_range)
+    log("within z range "..within_z_range)
     within_working_area = within_x_range and within_y_range and within_z_range
-    print("is within working area?", within_working_area)
+    log("is "..x.." "..y.." "..z.." within working area? "..within_working_area)
     return within_working_area
 end
 
@@ -194,7 +194,7 @@ function query:getPossibleEdges(x,z)
 
         if self:withinWorkingArea(cords[1], cords[2], cords[3]) and mineable then
             table.insert(possible_edges, edge)
-            print("found possible edge for", x, z, ": (", edge[1], edge[2], ")")
+            log("found possible edge for "..x.." "..z..": ("..edge[1].." "..edge[2]..")")
         end
     end
     os.sleep(1)
@@ -212,10 +212,10 @@ function query:astarToLocation(x,z)
     }}
 
     function expandPath(index, path)
-        print("expanding path", path)
+        log("expanding path: "..path)
         local edges = self:getPossibleEdges(path.destination.x, path.destination.z)
         for _, edge in ipairs(edges) do
-            print("possible edge", edge[1], edge[2])
+            log("possible edge ("..edge[1].." "..edge[2]..")")
             local new_dest = {x = path.destination.x + edge[1], z = path.destination.z + edge[2]}
             local new_path = {
                 length = path.length + 1,
@@ -227,7 +227,7 @@ function query:astarToLocation(x,z)
                 table.insert(new_path.route, route_edge)
             end
             table.insert(new_path.route, edge)
-            print("found new path", new_path, "leading to (", new_path.destination.x, new_path.destination.z, ") with length:", new_path.length )
+            log("found new path "..new_path.." leading to ("..new_path.destination.x.." "..new_path.destination.z..") with length: "..new_path.length)
 
             if new_path.destination.x == x and new_path.destination.z == z then
                 return true, new_path
@@ -240,15 +240,15 @@ function query:astarToLocation(x,z)
     end
 
     function minPotentialDistance()
-        print("searching for minimal path")
+        log("searching for minimal path")
         local min = paths[1]
         local index = 1
         for i, path in pairs(paths) do
             local minVal = min.length + min.distance
             local currentVal = path.length + path.distance
-            print("min val", minVal, "vs currentVal", currentVal)
+            log("min val: "..minVal.." vs currentVal: "..currentVal)
             if minVal > currentVal then
-                print("min found:", path)
+                log("min found: "..path)
                 min = path
                 index = i
             end
@@ -258,7 +258,7 @@ function query:astarToLocation(x,z)
 
     while true do
         local index, path = minPotentialDistance() -- this does not return the correct thing
-        print("found path with minimal distance/length index =", index)
+        log("found path with minimal distance/length index = "..index)
 
 
         local found, solution = expandPath(index, path)
