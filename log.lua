@@ -36,7 +36,7 @@ function tableToString(tbl)
     local result = "{"
     local seperator = ""
     for k, v in pairs(tbl) do
-        result = result..seperator..k..": "..
+        result = result..seperator..k..": "
         if type(v) == "table" then
             result = result..tableToString(v)
         else
