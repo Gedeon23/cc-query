@@ -66,6 +66,13 @@ end
 query.black_list:addTag("c:ores")
 
 function query:setup()
+    log()
+    log("starting logs")
+    log("for", os.getComputerLabel())
+    log("at", os.time("local"))
+    log()
+
+
     self.x, self.z, self.y = gps.locate()
     self.start_position.x = self.x
     self.start_position.y = self.y
