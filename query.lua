@@ -160,8 +160,13 @@ function query:move(x, z)
 
         return true
     else
-        self.unmineable_blocks[{x = self.x + x, y = self.y, z = self.z + z}] = true
-        log("added to unmineable blocks:", self.unmineable_blocks)
+        cords = {x = self.x + x, y = self.y, z = self.z + z}
+        if self.unmineable_blocks[cords] then
+            log(cords, "already in unmineable blocks")
+        else
+            self.unmineable_blocks[cords] = true
+            log("added to unmineable blocks:", self.unmineable_blocks)
+        end
         return false
     end
 end
