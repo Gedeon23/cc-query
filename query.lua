@@ -69,7 +69,7 @@ function query:setup()
     log()
     log("starting logs")
     log("for", os.getComputerLabel())
-    log("at", os.time("local"))
+    log("at", textutils.formatTime(os.time("local")))
     log()
 
 
