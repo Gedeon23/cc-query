@@ -199,7 +199,7 @@ function query:getPossibleEdges(x,z)
             mineable = false
         end
 
-        if self:withinWorkingArea(cords[1], cords[2], cords[3]) and mineable then
+        if self:withinWorkingArea(cords.x, cords.y, cords.z) and mineable then
             table.insert(possible_edges, edge)
             log("found possible edge for "..x.." "..z..": ("..edge[1].." "..edge[2]..")")
         end
