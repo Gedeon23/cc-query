@@ -229,7 +229,7 @@ function query:getPossibleEdges(x,z)
     for i, edge in pairs(edges) do
         local cords = {x = x + edge[1], y = self.y, z = z + edge[2]}
         local mineable = true
-        if self.unmineable_blocks[cords.y][cords.x][cords.z] then
+        if self.unmineable_blocks:getBlock(cords.x, cords.y, cords.z) then
             log(x, z, "is unmineable. not adding to possible edges")
             mineable = false
         end
