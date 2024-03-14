@@ -36,6 +36,20 @@ query = {
     unmineable_blocks = {}
 }
 
+function query.unmineable_blocks:addBlock(x, y, z)
+    if not self[y] then
+        self[y] = {}
+    end
+    if not self[y][x] then
+        self[y][x] = {}
+    end
+    if not self[y][x][z] then
+        self[y][x][z] = {}
+    end
+    self[y][x][z] = true
+end
+        
+
 function query.black_list:addName(name)
     self.names[name] = true
 end
@@ -168,10 +182,10 @@ function query:move(x, z)
         return true
     else
         cords = {x = self.x + x, y = self.y, z = self.z + z}
-        if self.unmineable_blocks[cords] then
+        if self.unmineable_blocks[cords.y][cords.x][cords.z] then
             log(cords, "already in unmineable blocks")
         else
-            self.unmineable_blocks[cords] = true
+            self.unmineable_blocks:addBlock(cords.x, cords.y, cords.z) = true
             log("added to unmineable blocks:", self.unmineable_blocks)
         end
         return false
@@ -201,7 +215,7 @@ function query:getPossibleEdges(x,z)
     for i, edge in pairs(edges) do
         local cords = {x = x + edge[1], y = self.y, z = z + edge[2]}
         local mineable = true
-        if self.unmineable_blocks[cords] then
+        if self.unmineable_blocks[cords.y][cords.x][cords.z] then
             log(x, z, "is unmineable. not adding to possible edges")
             mineable = false
         end
