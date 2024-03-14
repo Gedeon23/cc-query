@@ -48,6 +48,20 @@ function query.unmineable_blocks:addBlock(x, y, z)
     end
     self[y][x][z] = true
 end
+
+function query.unmineable_blocks:getBlock(x, y, z)
+    local layer = self[y]
+    if layer then
+        local column = layer[x]
+        if column then
+            local block = column[z]
+            if block then
+                return true
+            end
+        end
+    end
+    return false
+end
         
 
 function query.black_list:addName(name)
@@ -182,10 +196,10 @@ function query:move(x, z)
         return true
     else
         cords = {x = self.x + x, y = self.y, z = self.z + z}
-        if self.unmineable_blocks[cords.y][cords.x][cords.z] then
+        if self.unmineable_blocks:getBlock(cords.x, cords.y, cords.z) then
             log(cords, "already in unmineable blocks")
         else
-            self.unmineable_blocks:addBlock(cords.x, cords.y, cords.z) = true
+            self.unmineable_blocks:addBlock(cords.x, cords.y, cords.z)
             log("added to unmineable blocks:", self.unmineable_blocks)
         end
         return false
