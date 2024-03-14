@@ -239,7 +239,6 @@ function query:getPossibleEdges(x,z)
             log("found possible edge for "..x.." "..z..": ("..edge[1].." "..edge[2]..")")
         end
     end
-    os.sleep(1)
 
     return possible_edges
 end
