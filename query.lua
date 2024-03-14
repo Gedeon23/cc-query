@@ -251,6 +251,30 @@ function query:astarToLocation(x,z)
         route = {},
         destination = {x = self.x, z = self.z}
     }}
+    
+    local visited_blocks = {}
+
+    function visited_blocks:addBlock(x, z)
+        if not self[x] then
+            self[x] = {}
+        end
+        if not self[x][z] then
+            self[x][z] = {}
+        end
+        self[x][z] = true
+    end
+
+    function visited_blocks:getBlock(x, z)
+        local column = self[x]
+        if column then
+            local block = column[z]
+            if block then
+                return true
+            end
+        end
+        return false
+    end
+
 
     function expandPath(index, path)
         log("expanding path:", path)
@@ -258,22 +282,27 @@ function query:astarToLocation(x,z)
         for _, edge in ipairs(edges) do
             log("possible edge ("..edge[1].." "..edge[2]..")")
             local new_dest = {x = path.destination.x + edge[1], z = path.destination.z + edge[2]}
-            local new_path = {
-                length = path.length + 1,
-                distance = dist(x, z, new_dest.x, new_dest.z),
-                route = {},
-                destination = new_dest
-            }
-            for _, route_edge in ipairs(path.route) do
-                table.insert(new_path.route, route_edge)
-            end
-            table.insert(new_path.route, edge)
-            log("found new path", new_path, "leading to ("..new_path.destination.x, new_path.destination.z..") with length:", new_path.length)
 
-            if new_path.destination.x == x and new_path.destination.z == z then
-                return true, new_path
+            if not visited_blocks:getBlock(new_dest.x, new_dest.z) then
+                visited_blocks:addBlock(new_dest.x, new_dest.z)
+                local new_path = {
+                    length = path.length + 1,
+                    distance = dist(x, z, new_dest.x, new_dest.z),
+                    route = {},
+                    destination = new_dest
+                }
+                for _, route_edge in ipairs(path.route) do
+                    table.insert(new_path.route, route_edge)
+                end
+                table.insert(new_path.route, edge)
+                log("found new path", new_path, "leading to ("..new_path.destination.x, new_path.destination.z..") with length:", new_path.length)
+
+                if new_path.destination.x == x and new_path.destination.z == z then
+                    return true, new_path
+                end
+                table.insert(paths, new_path)
             end
-            table.insert(paths, new_path)
+
         end
 
         table.remove(paths, index)
