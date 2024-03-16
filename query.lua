@@ -405,6 +405,7 @@ function test()
         query:excavateLayer()
         turtle.digDown()
         turtle.down()
+        query.y = query.y - 1
     end
 end
 
