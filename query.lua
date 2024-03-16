@@ -331,8 +331,13 @@ function query:astarToLocation(x,z)
     end
 
     while true do
-        local index, path = minPotentialDistance() -- this does not return the correct thing
-        -- log("found path with minimal distance/length index = "..index)
+        local index, path = minPotentialDistance()
+        if path then
+            log("found path with minimal distance/length index = "..index)
+        else
+            log("no solution found for", x, z)
+            return nil
+        end
 
 
         local found, solution = expandPath(index, path)
@@ -375,13 +380,18 @@ function query:excavateLayer()
 
     while mining_queue[1] ~= nil do
         local index, target = getClosestFromQueue()
+        log("looking for path to", target)
         local path = self:astarToLocation(target[1], target[2])
-        for i, vec in pairs(path.route) do
-            removeFromMiningQueue(self.x + vec[1], self.z + vec[2])
-            local success = query:move(vec[1], vec[2])
-            if not success then
-                break
+        if path then
+            for i, vec in pairs(path.route) do
+                removeFromMiningQueue(self.x + vec[1], self.z + vec[2])
+                local success = query:move(vec[1], vec[2])
+                if not success then
+                    break
+                end
             end
+        else
+            removeFromMiningQueue(target[1], target[2])
         end
     end
 
