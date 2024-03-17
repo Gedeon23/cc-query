@@ -6,16 +6,19 @@ while true do
         bool, cauldron = turtle.inspect()
         if cauldron.name == "minecraft:lava_cauldron" then
             turtle.place()
-            turtle.turnLeft()
         end
+        turtle.turnLeft()
     end
 
     for i = 16, 1, -1 do
         turtle.select(i)
-        if turtle.getItemDetail().name == "minecraft:lava_bucket" then
-            storage[1].pullItems(turtle_name, i)
+        local item = turtle.getItemDetail()
+        if item then
+            if item.name == "minecraft:lava_bucket" then
+                storage[1].pullItems(turtle_name, i)
+            end
         end
     end
 
-    sleep(10)
+    sleep(100)
 end
