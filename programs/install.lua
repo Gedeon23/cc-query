@@ -8,7 +8,12 @@ if fs.exists(file_name) then
     file.close()
     programs = textutils.unserialise(contents)
 else
-    programs = {}
+    programs = {
+        "https://raw.githubusercontent.com/Gedeon23/cc-query/master/programs/install.lua",
+        "https://raw.githubusercontent.com/Gedeon23/cc-query/master/programs/update.lua"
+    }
+    shell.run("wget", programs[1])
+    shell.run("wget", programs[2])
 end
 
 table.insert(programs, arg[1])
