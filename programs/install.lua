@@ -17,6 +17,6 @@ else
 end
 
 table.insert(programs, arg[1])
-file = fs.open(file_name, "w+")
+file = fs.open(file_name, "w")
 file.writeLine(textutils.serialise(programs))
 file.close()
