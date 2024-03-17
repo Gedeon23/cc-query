@@ -1,5 +1,6 @@
 local storage = {peripheral.find("minecraft:chest")}
 local turtle_name = "turtle_0"
+local bucket_storage = peripheral.find("minecraft:barrel")
 
 while true do
     for i = 1,4 do
@@ -19,6 +20,9 @@ while true do
             end
         end
     end
+
+    local missing_buckets = 16 - turtle.getItemCount()
+    bucket_storage.pushItems(turtle_name, 1, missing_buckets)
 
     sleep(100)
 end
