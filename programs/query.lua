@@ -112,8 +112,10 @@ function query:setup()
     -- replace later with user input
     local length = 16
     local width = 16
-    local start_depth = 62
-    local stop_depth = -61
+    print("start at y level?")
+    local start_depth = read()
+    print("stop at y level?")
+    local stop_depth = read()
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
@@ -278,7 +280,7 @@ function query:astarToLocation(x,z)
 
     function expandPath(index, path)
         if path == nil then
-            log("for some reason was provided nil as path maybe take a look paths", paths)
+            -- log("for some reason was provided nil as path maybe take a look paths", paths)
         else
             -- log("expanding path:", path)
             local edges = self:getPossibleEdges(path.destination.x, path.destination.z)
@@ -333,9 +335,9 @@ function query:astarToLocation(x,z)
     while true do
         local index, path = minPotentialDistance()
         if path then
-            log("found path with minimal distance/length index = "..index)
+            -- log("found path with minimal distance/length index = "..index)
         else
-            log("no solution found for", x, z)
+            -- log("no solution found for", x, z)
             return nil
         end
 
@@ -380,7 +382,7 @@ function query:excavateLayer()
 
     while mining_queue[1] ~= nil do
         local index, target = getClosestFromQueue()
-        log("looking for path to", target)
+        -- log("looking for path to", target)
         local path = self:astarToLocation(target[1], target[2])
         if path then
             for i, vec in pairs(path.route) do
