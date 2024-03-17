@@ -1,7 +1,7 @@
 file_name = "programs.txt"
 function getFileNameFromGithubLink(src)
     for i = #src, 1, -1 do
-        if src:sub(i, #src) == "/" then
+        if src:sub(i, i) == "/" then
             return src:sub(i+1, #src)
         end
     end
