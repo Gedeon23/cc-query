@@ -9,6 +9,7 @@ end
 
 file = fs.open(file_name, "r")
 contents = file.readAll()
+file.close()
 programs = textutils.unserialise(contents)
 
 for i, program in pairs(programs) do
