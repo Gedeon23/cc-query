@@ -113,9 +113,9 @@ function query:setup()
     local length = 16
     local width = 16
     print("start at y level?")
-    local start_depth = read()
+    local start_depth = tonumber(read())
     print("stop at y level?")
-    local stop_depth = read()
+    local stop_depth = tonumber(read())
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
