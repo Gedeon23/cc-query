@@ -16,8 +16,12 @@ function inv:getItems()
                 self.items[slot.name].location = {}
                 slef.items[slot.name].location[bIndex] = {sIndex}
             else
-                self.items[slot.name].count = self.items[slot.name] + slot.count
-                table.insert(self.items[slot.name].location[bIndex], sIndex)
+                self.items[slot.name].count = self.items[slot.name].count + slot.count
+                if self.items[slot.name].location[bIndex] == nil then
+                    self.items[slot.name].location[bIndex] = {sIndex}
+                else
+                    table.insert(self.items[slot.name].location[bIndex], sIndex)
+                end
             end
         end
     end
