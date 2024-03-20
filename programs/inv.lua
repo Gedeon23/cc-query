@@ -13,7 +13,8 @@ function inv:getItems()
         for sIndex, slot in pairs(barrel.list()) do
             if self.items[slot.name] == nil then
                 self.items[slot.name] = {count = slot.count}
-                self.items[slot.name].location = {bIndex = {sIndex}}
+                self.items[slot.name].location = {}
+                slef.items[slot.name].location[bIndex] = {sIndex}
             else
                 self.items[slot.name].count = self.items[slot.name] + slot.count
                 table.insert(self.items[slot.name].location[bIndex], sIndex)
