@@ -1,3 +1,4 @@
+log = require("log")
 
 inv = {
     chests = { peripheral.find("minecraft:chest") },
@@ -8,12 +9,6 @@ inv = {
 function inv:takeStock()
     self.items = {}
     for index, barrel in pairs(self.barrels) do
-        for slot, item in pairs(self.chests) do
-            if items[item.name] then
-                items[item.name].count = items[item.name].count + item.count
-            else
-                items[item.name] = {count = 0}
-            end
-        end
+        log(barrel.list())
     end
 end

@@ -95,7 +95,7 @@ query.black_list:addTag("c:ores")
 
 function query:setup()
     -- log()
-    -- log("starting -- logs")
+    -- log("starting logs")
     -- log("for", os.getComputerLabel())
     -- log("at", textutils.formatTime(os.time("local")))
     -- log()
