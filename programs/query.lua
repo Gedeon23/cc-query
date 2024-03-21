@@ -1,4 +1,4 @@
-local log = require("log")
+-- local log = require("log")
 
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
@@ -6,6 +6,7 @@ query = {
     y = 0,
     z = 0,
     dir = 3,
+    mode = "xray",
 
     start_position = {
         x = 0,
@@ -109,9 +110,27 @@ function query:setup()
     -- coms
     rednet.open("right")
 
-    -- replace later with user input
-    local length = 16
-    local width = 16
+    if arg[1] then
+        self.mode = arg[1]
+    else
+        print("what mode would you like to use? (xray/vein)")
+        self.mode = read()
+    end
+
+    if arg[2] then
+        local length = arg[2]
+    else
+        print("length?")
+        local length = tonumber(read())
+    end
+
+    if arg[3] then
+        local width = arg[3]
+    else
+        print("width?")
+        local width = tonumber(read())
+    end
+
     print("start at y level?")
     local start_depth = tonumber(read())
     print("stop at y level?")
@@ -401,7 +420,7 @@ end
 
 
 
-function test()
+function query:xray()
     query:descendToWorkingArea()
     for y = query.working_area.y.start, query.working_area.y.stop + 1, -1 do
         query:excavateLayer()
@@ -411,8 +430,18 @@ function test()
     end
 end
 
+function query:start()
+    if query.mode == "xray" then
+        query:xray()
+    elseif query.mode == "vein" then
+        query:vein()
+    else
+        print("mode invalid")
+    end
+end
+
 query:setup()
-test()
+query:start()
 
 
 
