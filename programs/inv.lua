@@ -31,6 +31,8 @@ function inv:takeStock()
 end
 
 function inv:getItems()
+    return self.items
+end
 
 function inv:getItem(name)
     return self.items[name]
