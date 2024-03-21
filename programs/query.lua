@@ -117,18 +117,20 @@ function query:setup()
         self.mode = read()
     end
 
+    local length
     if arg[2] then
-        local length = arg[2]
+        length = arg[2]
     else
         print("length?")
-        local length = tonumber(read())
+        length = tonumber(read())
     end
 
+    local width
     if arg[3] then
-        local width = arg[3]
+        width = arg[3]
     else
         print("width?")
-        local width = tonumber(read())
+        width = tonumber(read())
     end
 
     print("start at y level?")
