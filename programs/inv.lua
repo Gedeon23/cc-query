@@ -14,13 +14,15 @@ function inv:getItems()
             if self.items[slot.name] == nil then
                 self.items[slot.name] = {count = slot.count}
                 self.items[slot.name].location = {}
-                slef.items[slot.name].location[bIndex] = {sIndex}
+                self.items[slot.name].location[bIndex] = {}
+                self.items[slot.name].location[bIndex][sIndex] = slot.count
             else
                 self.items[slot.name].count = self.items[slot.name].count + slot.count
                 if self.items[slot.name].location[bIndex] == nil then
-                    self.items[slot.name].location[bIndex] = {sIndex}
+                    self.items[slot.name].location[bIndex] = {}
+                    slef.items[slot.name].location[bIndex][sIndex] = slot.count
                 else
-                    table.insert(self.items[slot.name].location[bIndex], sIndex)
+                    self.items[slot.name].location[bIndex][sIndex] = slot.count
                 end
             end
         end
