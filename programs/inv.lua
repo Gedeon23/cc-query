@@ -1,3 +1,5 @@
+local basalt = require("basalt")
+
 inv = {
     chests = { peripheral.find("minecraft:chest") },
     barrels = { peripheral.find("minecraft:barrel") },
@@ -28,6 +30,8 @@ function inv:takeStock()
     return self.items
 end
 
+function inv:getItems()
+
 function inv:getItem(name)
     return self.items[name]
 end
@@ -38,5 +42,12 @@ function inv:printItemList()
     end
 end
 
+local main = basalt.createFrame()
+basalt.autoUpdate()
+
 inv:takeStock()
-inv:printItemList()
+
+local aList = main:addList()
+for item_name, item in pairs(self.items) do
+    aList:addItem(item_name.." "..item.count)
+end
