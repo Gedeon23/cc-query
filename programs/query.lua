@@ -1,5 +1,7 @@
 -- local log = require("log")
 
+arg = {...}
+
 query = {
     direction = {NORTH = 1, EAST = 2, SOUTH = 3, WEST = 4},
     x = 0,
@@ -119,7 +121,7 @@ function query:setup()
 
     local length
     if arg[2] then
-        length = arg[2]
+        length = tonumber(arg[2])
     else
         print("length?")
         length = tonumber(read())
@@ -127,16 +129,27 @@ function query:setup()
 
     local width
     if arg[3] then
-        width = arg[3]
+        width = tonumber(arg[3])
     else
         print("width?")
         width = tonumber(read())
     end
 
-    print("start at y level?")
-    local start_depth = tonumber(read())
-    print("stop at y level?")
-    local stop_depth = tonumber(read())
+    local start_depth
+    if arg[4] then
+        start_depth = arg[4]
+    else
+        print("start at y level?")
+        start_depth = tonumber(read())
+    end
+
+    local stop_depth
+    if arg[5] then
+        stop_depth = arg[5]
+    else 
+        print("stop at y level?")
+        stop_depth = tonumber(read())
+    end
 
     -- save dimensions relativ to turtle
     self.working_area.x.start = self.x
