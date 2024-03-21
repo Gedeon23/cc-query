@@ -5,9 +5,6 @@ inv = {
 }
 
 function inv:takeStock()
-end
-
-function inv:getItems()
     self.items = {}
     for bIndex, barrel in pairs(self.barrels) do
         for sIndex, slot in pairs(barrel.list()) do
@@ -31,11 +28,15 @@ function inv:getItems()
     return self.items
 end
 
+function inv:getItem(name)
+    return self.items[name]
+end
+
 function inv:printItemList()
     for item_name, item in pairs(self.items) do
         print(item_name, item.count)
     end
 end
 
-inv:getItems()
+inv:takeStock()
 inv:printItemList()
