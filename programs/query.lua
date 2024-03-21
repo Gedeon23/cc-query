@@ -137,7 +137,7 @@ function query:setup()
 
     local start_depth
     if arg[4] then
-        start_depth = arg[4]
+        start_depth = tonumber(arg[4])
     else
         print("start at y level?")
         start_depth = tonumber(read())
@@ -145,7 +145,7 @@ function query:setup()
 
     local stop_depth
     if arg[5] then
-        stop_depth = arg[5]
+        stop_depth = tonumber(arg[5])
     else 
         print("stop at y level?")
         stop_depth = tonumber(read())
