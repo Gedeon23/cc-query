@@ -20,7 +20,7 @@ function inv:getItems()
                 self.items[slot.name].count = self.items[slot.name].count + slot.count
                 if self.items[slot.name].location[bIndex] == nil then
                     self.items[slot.name].location[bIndex] = {}
-                    slef.items[slot.name].location[bIndex][sIndex] = slot.count
+                    self.items[slot.name].location[bIndex][sIndex] = slot.count
                 else
                     self.items[slot.name].location[bIndex][sIndex] = slot.count
                 end
@@ -31,4 +31,11 @@ function inv:getItems()
     return self.items
 end
 
-print(textutils.serialise(inv:getItems()))
+function inv:printItemList()
+    for item_name, item in pairs(self.items) do
+        print(item_name, item.count)
+    end
+end
+
+inv:getItems()
+inv:printItemList()
