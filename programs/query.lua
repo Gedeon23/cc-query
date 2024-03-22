@@ -37,6 +37,7 @@ query = {
     },
 
     unmineable_blocks = {}
+    vein_block = ""
 }
 
 function query.unmineable_blocks:addBlock(x, y, z)
@@ -444,6 +445,65 @@ function query:xray()
         query.y = query.y - 1
     end
 end
+
+function query:getCordsFromDir(dir)
+    dir_to_cords = {}
+    dir_to_cords[1] = {x = 0, y = 0, z = -1}
+    dir_to_cords[2] = {x = 1, y = 0, z = 0}
+    dir_to_cords[3] = {x = 0, y = 0, z = 1}
+    dir_to_cords[4] = {x = -1, y = 0, z = 0}
+    local cord_change = dir_to_cords[dir]
+    return {x = self.x + cord_change.x, y = self.y + cord_change.y, z = self.z + cord_change.z}
+end
+
+function query:getFacedCords()
+    return self:getCordsFromDir(self.dir)
+end
+
+function query:scan()
+    surrounding_space = {}
+    for i = 1, 4 do
+        query:turn(self.dir + i)
+        exists, block = turtle.inspect()
+        if exists then
+            surrounding_space[self:getFacedCords] = block
+        end
+    end
+    exists, block_above = turtle.inspectUp()
+    if exists then
+        surrounding_space[{x = self.x, y = self.y + 1, z = self.z}] = block_above
+    end
+
+    exists, block_below = turtle.inspectDown()
+    if exists then
+        surrounding_space[{x = self.x, y = self.y - 1, z = self.z}] = block_below
+    end
+    return surrounding_space
+end
+
+
+
+function query:vein()
+    local exists, block = turtle.inspect()
+    mining_queue = {}
+    if exists then
+        self.vein_block = block
+        table.insert(mining_queue, self:getFacedCords)
+
+        while mining_queue[1] do
+            -- TODO astar to closest block (3d?)
+            space = self:scan()
+            for cords, block in pairs(space) do
+                if block.name == self.vein_block then
+                    table.insert(mining_queue, cords)
+                end
+            end
+        end
+    else
+        print("no mineable block found")
+    end
+end
+
 
 function query:start()
     if query.mode == "xray" then
