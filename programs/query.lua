@@ -36,7 +36,7 @@ query = {
         }
     },
 
-    unmineable_blocks = {}
+    unmineable_blocks = {},
     vein_block = ""
 }
 
@@ -466,7 +466,7 @@ function query:scan()
         query:turn(self.dir + i)
         exists, block = turtle.inspect()
         if exists then
-            surrounding_space[self:getFacedCords] = block
+            surrounding_space[self:getFacedCords()] = block
         end
     end
     exists, block_above = turtle.inspectUp()
@@ -488,10 +488,10 @@ function query:vein()
     mining_queue = {}
     if exists then
         self.vein_block = block
-        table.insert(mining_queue, self:getFacedCords)
+        table.insert(mining_queue, self:getFacedCords())
 
         while mining_queue[1] do
-            -- TODO astar to closest block (3d?)
+            -- #TODO astar to closest block (3d?)
             space = self:scan()
             for cords, block in pairs(space) do
                 if block.name == self.vein_block then
@@ -503,6 +503,7 @@ function query:vein()
         print("no mineable block found")
     end
 end
+
 
 
 function query:start()
