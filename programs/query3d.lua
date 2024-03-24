@@ -346,7 +346,7 @@ function query:astarToLocation(x, y, z)
             -- log("for some reason was provided nil as path maybe take a look paths", paths)
         else
             -- log("expanding path:", path)
-            local edges = self:getPossibleEdges(path.destination.x, path.destination.z)
+            local edges = self:getPossibleEdges(path.destination.x, path.destination.y, path.destination.z)
             for _, edge in ipairs(edges) do
                 -- log("possible edge ("..edge[1].." "..edge[2]..")")
                 local new_dest = {x = path.destination.x + edge[1], y = path.destination.y + edge[2], z = path.destination.z + edge[3]}
