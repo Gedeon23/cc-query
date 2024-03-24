@@ -50,6 +50,7 @@ basalt.autoUpdate()
 inv:takeStock()
 
 local aList = main:addList()
+aList:addItem("item 1")
 for item_name, item in pairs(self.items) do
     aList:addItem(item_name.." "..item.count)
 end
