@@ -516,7 +516,7 @@ function query:vein()
     function getClosestFromQueue() -- #TODO refactor into function on query field
         local index = 1
         local min = mining_queue[index]
-        for i, block = pairs(mining_queue) do
+        for i, block in pairs(mining_queue) do
             if dist(self.x, self.y, self.z, block.x, block.y, block.z) < dist(self.x, self.y, self.z, min.x, min.y, min.z) then
                 index = i
                 min = block
