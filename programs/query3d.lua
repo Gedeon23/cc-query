@@ -511,18 +511,44 @@ end
 
 function query:vein()
     local exists, block = turtle.inspect()
-    mining_queue = {}
+    mining_queue = {} -- #TODO make field in query table
+
+    function getClosestFromQueue() -- #TODO refactor into function on query field
+        local index = 1
+        local min = mining_queue[index]
+        for i, block = pairs(mining_queue) do
+            if dist(self.x, self.y, self.z, block.x, block.y, block.z) < dist(self.x, self.y, self.z, min.x, min.y, min.z) then
+                index = i
+                min = block
+            end
+        end
+        return index, min
+    end
+
     if exists then
         self.vein_block = block
         table.insert(mining_queue, self:getFacedCords())
 
         while mining_queue[1] do
-            -- #TODO astar to closest block (3d?)
             space = self:scan()
             for cords, block in pairs(space) do
                 if block.name == self.vein_block then
                     table.insert(mining_queue, cords)
                 end
+            end
+
+            local index, target = getClosestFromQueue() -- #TODO refactor into query method to avoid code reuse
+            local path = self:astarToLocation(target[1], target[2], target[3])
+            if path then
+                for i, vec in pairs(path.route) do
+                    removeFromMiningQueue(self.x + vec[1], self.y + vec[2], self.z + vec[3])
+                    local success = query:move(vec[1], vec[2], vec[3])
+                    if not success then
+                        break
+                    end
+                end
+            else
+                removeFromMiningQueue(target[1], target[2], target[3])
             end
         end
     else
