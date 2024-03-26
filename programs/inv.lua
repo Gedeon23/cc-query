@@ -3,22 +3,25 @@ local basalt = require("basalt")
 inv = {
     chests = { peripheral.find("minecraft:chest") },
     barrels = { peripheral.find("minecraft:barrel") },
-    items = {}
+    items = {},
     ui = {}
 }
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
-    self.ui.flex = main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
-    self.ui.leftColumn = flex:addFlexbox():setDirection("column"):setSpacing(0)
-    self.ui.rightColumn = flex:addFlexbox():setDirection("column")
-    self.ui.itemSearch = leftColumn:addInput():setInputType("text"):onChar(function(self, event, char)
+    self.ui.flex = self.ui.main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
+    self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
+    self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
+    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):onChar(function(self, event, char)
         inv:updateItemList()
-    )
-    self.ui.itemList = leftColumn:addList()
-    self.ui.itemName = rightColumn:addLabel():setText("placeholder"):setFontSize(1)
+    end)
+    self.ui.itemList = self.ui.leftColumn:addList()
+    self.ui.itemName = self.ui.rightColumn:addLabel():setText("placeholder"):setFontSize(1)
 
     basalt.autoUpdate()
+end
+function inv:updateItemList()
+    basalt.debug("updated Item list")
 end
 
 function prettifyName(name)
