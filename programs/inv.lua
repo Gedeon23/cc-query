@@ -6,7 +6,7 @@ inv = {
     items = {},
     ui = {
         colors = {
-            bg = colors.lightGray
+            bg = colors.lightGray,
             text = colors.black
         }
     }
