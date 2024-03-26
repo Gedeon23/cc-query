@@ -19,6 +19,7 @@ function inv:takeStock()
             local name = prettifyName(slot.name)
             if self.items[name] == nil then
                 self.items[name] = {count = slot.count}
+                self.items[name].name = name
                 self.items[name].location = {}
                 self.items[name].location[bIndex] = {}
                 self.items[name].location[bIndex][sIndex] = slot.count
@@ -60,9 +61,9 @@ local flex = main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.
 local aList = flex:addList()
 local label = flex:addLabel()
 label:setText("placeholder")
-label:setFontSize(2)
+label:setFontSize(1)
 for item_name, item in pairs(inv.items) do
-    aList:addItem(item_name.." "..item.count)
+    aList:addItem(item_name.." "..item.count, colors.lightGray, colors.black, item)
 end
 
 aList:onSelect(function(self, event, item)
