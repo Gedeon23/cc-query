@@ -59,13 +59,13 @@ local aList = main:addList()
 local label = main:addLabel()
 label:setText("placeholder")
 label:setFontSize(2)
-aList:addItem("item 1")
 for item_name, item in pairs(inv.items) do
     aList:addItem(item_name.." "..item.count)
 end
 
 aList:onSelect(function(self, event, item)
     label:setText(item)
+    basalt.debug(textutils.serialise(item))
 end)
 
 basalt.autoUpdate()
