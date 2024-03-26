@@ -6,9 +6,9 @@ inv = {
     items = {}
 }
 
-function removeModFromName(name)
+function prettifyName(name)
     local beginning = string.find(name, ":") + 1
-    return name:sub(beginning, string.len(name))
+    return name:sub(beginning, string.len(name)):gsub("_", "")
 end
 
 
