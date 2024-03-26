@@ -56,9 +56,14 @@ local main = basalt.createFrame()
 inv:takeStock()
 
 local aList = main:addList()
+local label = main:addLabel()
 aList:addItem("item 1")
 for item_name, item in pairs(inv.items) do
     aList:addItem(item_name.." "..item.count)
 end
+
+aList:onSelect(function(self, event, item)
+    label:setText(item)
+end)
 
 basalt.autoUpdate()
