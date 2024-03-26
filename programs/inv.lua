@@ -8,7 +8,7 @@ inv = {
 
 function prettifyName(name)
     local beginning = string.find(name, ":") + 1
-    return name:sub(beginning, string.len(name)):gsub("_", "")
+    return name:sub(beginning, string.len(name)):gsub("_", " ")
 end
 
 
@@ -16,7 +16,7 @@ function inv:takeStock()
     self.items = {}
     for bIndex, barrel in pairs(self.barrels) do
         for sIndex, slot in pairs(barrel.list()) do
-            local name = removeModFromName(slot.name)
+            local name = prettifyName(slot.name)
             if self.items[name] == nil then
                 self.items[name] = {count = slot.count}
                 self.items[name].location = {}
