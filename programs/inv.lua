@@ -57,17 +57,20 @@ local main = basalt.createFrame()
 inv:takeStock()
 
 local flex = main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
+local leftColumn = flex:addFlexbox():setDirection("column")
+local rightColumn = flex:addFlexbox():setDirection("column")
+local itemSearch = leftColumn:addInput():setInputType("text")
+local itemList = leftColumn:addList()
+local itemName = rightColumn:addLabel()
+itemName:setText("placeholder")
+itemName:setFontSize(1)
 
-local aList = flex:addList()
-local label = flex:addLabel()
-label:setText("placeholder")
-label:setFontSize(1)
-for item_name, item in pairs(inv.items) do
-    aList:addItem(item_name.." "..item.count, colors.lightGray, colors.black, item)
+for _, item in pairs(inv.items) do
+    itemList:addItem(item.name.." "..item.count, colors.lightGray, colors.black, item)
 end
 
-aList:onSelect(function(self, event, item)
-    label:setText(textutils.serialise(item.args.location)
+itemList:onSelect(function(self, event, item)
+    itemName:setText(textutils.serialise(item.args.location)
     basalt.debug(textutils.serialise(item))
 end)
 
