@@ -67,7 +67,7 @@ for item_name, item in pairs(inv.items) do
 end
 
 aList:onSelect(function(self, event, item)
-    label:setText(textutils.serialise(item.args)
+    label:setText(textutils.serialise(item.args.location)
     basalt.debug(textutils.serialise(item))
 end)
 
