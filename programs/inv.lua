@@ -4,18 +4,27 @@ inv = {
     chests = { peripheral.find("minecraft:chest") },
     barrels = { peripheral.find("minecraft:barrel") },
     items = {},
-    ui = {}
+    ui = {
+        colors = {
+            bg = colors.lightGray
+            text = colors.black
+        }
+    }
 }
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
-    self.ui.flex = self.ui.main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
+    self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):onChar(function(self, event, char)
         inv:updateItemList()
     end)
     self.ui.itemList = self.ui.leftColumn:addList()
+    for _, item in pairs(self.items) do
+        self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
+    end
+
     self.ui.itemName = self.ui.rightColumn:addLabel():setText("placeholder"):setFontSize(1)
 
     basalt.autoUpdate()
