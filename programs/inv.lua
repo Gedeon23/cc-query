@@ -7,7 +7,7 @@ inv = {
 }
 
 function removeModFromName(name)
-    local beginning = string.find(name, ":")
+    local beginning = string.find(name, ":") + 1
     return name:sub(beginning, string.len(name))
 end
 
