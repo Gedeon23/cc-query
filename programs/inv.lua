@@ -55,8 +55,10 @@ local main = basalt.createFrame()
 
 inv:takeStock()
 
-local aList = main:addList()
-local label = main:addLabel()
+local flex = main:addFlexbox():setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
+
+local aList = flex:addList()
+local label = flex:addLabel()
 label:setText("placeholder")
 label:setFontSize(2)
 for item_name, item in pairs(inv.items) do
