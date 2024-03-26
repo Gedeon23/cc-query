@@ -6,22 +6,29 @@ inv = {
     items = {}
 }
 
+function removeModFromName(name)
+    local beginning = string.find(name, ":")
+    return name:sub(beginning, string.len(name))
+end
+
+
 function inv:takeStock()
     self.items = {}
     for bIndex, barrel in pairs(self.barrels) do
         for sIndex, slot in pairs(barrel.list()) do
-            if self.items[slot.name] == nil then
-                self.items[slot.name] = {count = slot.count}
-                self.items[slot.name].location = {}
-                self.items[slot.name].location[bIndex] = {}
-                self.items[slot.name].location[bIndex][sIndex] = slot.count
+            local name = removeModFromName(slot.name)
+            if self.items[name] == nil then
+                self.items[name] = {count = slot.count}
+                self.items[name].location = {}
+                self.items[name].location[bIndex] = {}
+                self.items[name].location[bIndex][sIndex] = slot.count
             else
-                self.items[slot.name].count = self.items[slot.name].count + slot.count
-                if self.items[slot.name].location[bIndex] == nil then
-                    self.items[slot.name].location[bIndex] = {}
-                    self.items[slot.name].location[bIndex][sIndex] = slot.count
+                self.items[name].count = self.items[name].count + slot.count
+                if self.items[name].location[bIndex] == nil then
+                    self.items[name].location[bIndex] = {}
+                    self.items[name].location[bIndex][sIndex] = slot.count
                 else
-                    self.items[slot.name].location[bIndex][sIndex] = slot.count
+                    self.items[name].location[bIndex][sIndex] = slot.count
                 end
             end
         end
@@ -45,12 +52,13 @@ function inv:printItemList()
 end
 
 local main = basalt.createFrame()
-basalt.autoUpdate()
 
 inv:takeStock()
 
 local aList = main:addList()
 aList:addItem("item 1")
-for item_name, item in pairs(self.items) do
+for item_name, item in pairs(inv.items) do
     aList:addItem(item_name.." "..item.count)
 end
+
+basalt.autoUpdate()
