@@ -130,7 +130,7 @@ function bubblesort(list, compare)
     return list
 end
 
-function bubblesortItems(compare)
+function inv:bubblesortItems(compare)
     self.item_list = bubblesort(self.item_list, compare)
 end
 
