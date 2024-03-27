@@ -36,20 +36,27 @@ function inv:buildUI()
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
-    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):setDefaultText("search"):setValue(self.search_term):onKeyUp(function(input, event, key)
-        if key == 259 then
-            self:removeRowFromItemDistances(input, event, key)
-            self.search_term = input:getValue()
-            self:updateItemList(input, event, key)
-        elseif key == 257 then
-            -- enter
-            -- shift focus to list
-        else
-            self:updateItemSearchDistance(input, event, key)
-            self.search_term = input:getValue()
-            self:updateItemList(input, event, key)
-        end
-    end)
+    self.ui.itemSearch = self.ui.leftColumn
+        :addInput()
+        :setInputType("text")
+        :setDefaultText("search")
+        :setValue(self.search_term)
+        :onKey(
+            function(input, event, key)
+                if key == 259 then
+                    self:removeRowFromItemDistances(input, event, key)
+                    self.search_term = input:getValue()
+                    self:updateItemList(input, event, key)
+                elseif key == 257 then
+                    -- enter
+                    -- shift focus to list
+                else
+                    self:updateItemSearchDistance(input, event, key)
+                    self.search_term = input:getValue()
+                    self:updateItemList(input, event, key)
+                end
+            end
+        )
     self.ui.itemList = self.ui.leftColumn:addList()
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
