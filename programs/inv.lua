@@ -15,6 +15,15 @@ inv = {
     item_list = {}
 }
 
+function inv:removeRowFromItemDistances()
+    local num_rows = #self.item_list[1].search_distance.table
+    local num_columns #self.item_list.search_distance.table[1]
+    for _, item in pairs(self.items) do
+        table.remove(item.search_distance.table, num_rows)
+        item.search_distance.distance = item.search_distance.table[num_rows][num_columns]
+    end
+end
+
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
@@ -22,10 +31,7 @@ function inv:buildUI()
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):setDefaultText("search"):setValue(self.search_term):onKey(function(input, event, key)
         if key == 259 then
-            for _, item in pairs(self.items) do
-                table.remove(item.search_distance.table, #item.search_distance.table)
-                item.search_distance.distance = item.search_distance.table[#item.search_distance.table][#item.search_distance.table[#item.search_distance.table]]
-            end
+            self:removeRowFromItemDistances()
             self:updateItemList(input, event, key)
         elseif key == 257 then
             -- enter
