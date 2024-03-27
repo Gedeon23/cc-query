@@ -31,7 +31,7 @@ function inv:buildUI()
     basalt.autoUpdate()
 end
 function inv:updateItemList()
-    basalt.debug("input updated ", self.ui.itemSearch.text)
+    basalt.debug("input updated ", self.ui.itemSearch:getValue())
 end
 
 function prettifyName(name)
