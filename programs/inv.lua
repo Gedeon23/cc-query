@@ -80,6 +80,7 @@ function inv:updateItemList(input, event, key)
 end
 
 function quicksort(list, compare)
+    log("quicksort called")
     if #list < 2 then
         return list
     end
