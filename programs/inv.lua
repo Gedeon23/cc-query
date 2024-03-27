@@ -51,7 +51,7 @@ function inv:updateItemSearchDistance()
     local new_search_term = self.ui.itemSearch:getValue()
     for _, item in pairs(self.items) do
         local d = item.search_distance.table
-        for i = #search_term+1, #new_search_term do -- #TODO
+        for i = #search_term+1, #new_search_term do
             table.insert(d, {i})
             for j = 1, #item.name do
                 local a = 0
@@ -80,6 +80,9 @@ function inv:updateItemList(input, event, key)
 end
 
 function quicksort(list, compare)
+    if #list < 2 then
+        return list
+    end
     local pivot_index = math.floor(#list/2)
     local pivot = list[pivot_index]
     local i = 1
