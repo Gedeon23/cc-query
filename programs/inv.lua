@@ -146,7 +146,7 @@ function inv:takeStock()
                 self.items[name].location = {}
                 self.items[name].location[bIndex] = {}
                 self.items[name].location[bIndex][sIndex] = slot.count
-                self.items[name].search_distance = {distance = string.len(name), table = levenshtein(self.search_term, name)}
+                self.items[name].search_distance = {distance = string.len(name), table = levenshtein(name, self.search_term)}
                 table.insert(self.item_list, self.items[name])
             else
                 self.items[name].count = self.items[name].count + slot.count
