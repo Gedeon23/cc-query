@@ -15,16 +15,18 @@ inv = {
     item_list = {}
 }
 
-function inv:removeRowFromItemDistances()
+function inv:removeRowFromItemDistances(input, event, key)
     log("removing from distance table", self.item_list[1].search_distance.table)
     for _, item in pairs(self.items) do
-        local num_rows = #item.search_distance.table
-        local num_columns = #item.search_distance.table[#item.search_distance.table]
-        if num_rows == 1 then
-            basalt.debug("nothing to delete from distance table")
-        else
-            table.remove(item.search_distance.table, num_rows)
-            item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
+        for i = #self.search_term+1, #input:getValue(), -1 do
+            local num_rows = #item.search_distance.table
+            local num_columns = #item.search_distance.table[#item.search_distance.table]
+            if num_rows == 1 then
+                basalt.debug("nothing to delete from distance table")
+            else
+                table.remove(item.search_distance.table, num_rows)
+                item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
+            end
         end
     end
 end
@@ -34,9 +36,10 @@ function inv:buildUI()
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
-    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):setDefaultText("search"):setValue(self.search_term):onKey(function(input, event, key)
+    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):setDefaultText("search"):setValue(self.search_term):onKeyUp(function(input, event, key)
         if key == 259 then
-            self:removeRowFromItemDistances()
+            self:removeRowFromItemDistances(input, event, key)
+            self.search_term = input:getValue()
             self:updateItemList(input, event, key)
         elseif key == 257 then
             -- enter
