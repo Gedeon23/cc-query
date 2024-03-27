@@ -16,9 +16,9 @@ inv = {
 }
 
 function inv:removeRowFromItemDistances()
-    local num_rows = #self.item_list[1].search_distance.table
-    local num_columns = #self.item_list[1].search_distance.table[1]
     for _, item in pairs(self.items) do
+        local num_rows = #item.search_distance.table
+        local num_columns = #item.search_distance.table[1]
         table.remove(item.search_distance.table, num_rows)
         item.search_distance.distance = item.search_distance.table[num_rows][num_columns]
     end
