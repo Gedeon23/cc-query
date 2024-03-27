@@ -16,11 +16,16 @@ inv = {
 }
 
 function inv:removeRowFromItemDistances()
+    log("removing from distance table", self.item_list[1].search_distance.table)
     for _, item in pairs(self.items) do
         local num_rows = #item.search_distance.table
         local num_columns = #item.search_distance.table[#item.search_distance.table]
-        table.remove(item.search_distance.table, num_rows)
-        item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
+        if num_rows == 1 then
+            basalt.debug("nothing to delete from distance table")
+        else
+            table.remove(item.search_distance.table, num_rows)
+            item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
+        end
     end
 end
 
