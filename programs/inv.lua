@@ -1,4 +1,5 @@
 local basalt = require("basalt")
+local log = require("log")
 
 inv = {
     chests = { peripheral.find("minecraft:chest") },
@@ -31,6 +32,7 @@ function inv:buildUI()
 end
 function inv:updateItemList()
     basalt.debug(textutils.serialise(self.ui.itemSearch))
+    log(self.ui.itemSearch)
 end
 
 function prettifyName(name)
