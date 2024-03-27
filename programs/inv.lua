@@ -18,8 +18,8 @@ function inv:buildUI()
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
-    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):onChar(function(self, event, char)
-        inv:updateItemList(event, char)
+    self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):onKey(function(self, event, key)
+        inv:updateList(self, event, key)
     end)
     self.ui.itemList = self.ui.leftColumn:addList()
     for _, item in pairs(self.items) do
@@ -30,8 +30,8 @@ function inv:buildUI()
 
     basalt.autoUpdate()
 end
-function inv:updateItemList()
-    basalt.debug("input updated ", self.ui.itemSearch:getValue())
+function inv:updateItemList(input, event, key)
+    basalt.debug(key, " pressed input updated ", input:getValue())
 end
 
 function prettifyName(name)
