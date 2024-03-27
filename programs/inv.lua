@@ -67,7 +67,7 @@ end
 
 function inv:updateItemList(input, event, key)
     basalt.debug(key, " pressed input updated ", input:getValue())
-    list:clear()
+    inv.ui.itemList:clear()
     local compare = function(item) return item.search_distance.distance end
     if #input:getValue() < 3 then
         self:quicksortItems(compare)
