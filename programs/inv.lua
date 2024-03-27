@@ -10,8 +10,8 @@ inv = {
             bg = colors.lightGray,
             text = colors.black
         }
-    }
-    search_term = ""
+    },
+    search_term = "",
     item_list = {}
 }
 
@@ -53,7 +53,7 @@ function inv:updateItemSearchDistance()
         local d = item.search_distance.table
         for i = #search_term, #new_search_term do -- #TODO
             table.insert(d, {i})
-            for j = 1, #item.name
+            for j = 1, #item.name do
                 local a = 0
                 if new_search_term:sub(i,i) ~= item.name:sub(j,j) then
                     a = 1
@@ -68,10 +68,11 @@ end
 function inv:updateItemList(input, event, key)
     basalt.debug(key, " pressed input updated ", input:getValue())
     list:clear()
+    local compare = function(item) return item.search_distance.distance end
     if #input:getValue() < 3 then
-        self:quicksortItems(self:getItemDistance)
+        self:quicksortItems(compare)
     else
-        self:bubblesortItems(self:getItemDistance)
+        self:bubblesortItems(compare)
     end
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
