@@ -19,7 +19,7 @@ function inv:buildUI()
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn:addInput():setInputType("text"):onKey(function(self, event, key)
-        inv:updateList(self, event, key)
+        inv:updateItemList(self, event, key)
     end)
     self.ui.itemList = self.ui.leftColumn:addList()
     for _, item in pairs(self.items) do
