@@ -82,6 +82,7 @@ end
 function quicksort(list, compare)
     log("quicksort called")
     if #list < 2 then
+        log("quicksort done")
         return list
     end
     local pivot_index = math.floor(#list/2)
