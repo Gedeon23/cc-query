@@ -105,8 +105,8 @@ function quicksort(list, compare)
         end
     end
 
-    leftside = quicksort({table.unpack(list), 1, i}, compare)
-    rightside = quicksort({table.unpack(list), j, #list}, compare)
+    leftside = quicksort({table.unpack(list, 1, i)}, compare)
+    rightside = quicksort({table.unpack(list, j, #list)}, compare)
     return {table.unpack(leftside), pivot, table.unpack(rightside)}
 end
 
