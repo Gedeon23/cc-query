@@ -51,7 +51,7 @@ function inv:updateItemSearchDistance()
     local new_search_term = self.ui.itemSearch:getValue()
     for _, item in pairs(self.items) do
         local d = item.search_distance.table
-        for i = #search_term, #new_search_term do -- #TODO
+        for i = #search_term+1, #new_search_term do -- #TODO
             table.insert(d, {i})
             for j = 1, #item.name do
                 local a = 0
@@ -146,7 +146,7 @@ function inv:takeStock()
                 self.items[name].location = {}
                 self.items[name].location[bIndex] = {}
                 self.items[name].location[bIndex][sIndex] = slot.count
-                self.items[name].search_distance = {distance = string.len(name), table = levenshtein(name, self.search_term)}
+                self.items[name].search_distance = {distance = string.len(name), table = levenshtein(self.search_term, name)}
                 table.insert(self.item_list, self.items[name])
             else
                 self.items[name].count = self.items[name].count + slot.count
