@@ -58,6 +58,14 @@ function inv:buildUI()
             end
         )
     self.ui.itemList = self.ui.leftColumn:addList()
+        :onKey(function(list, event, key)
+                index = list:getItemIndex()
+            if key == 264 --down
+                list:selectItem(index + 1)
+            elseif key == 265 -- up
+                list:selectItem(index - 1)
+            end
+        end)
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
     end
