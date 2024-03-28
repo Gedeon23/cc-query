@@ -59,10 +59,11 @@ function inv:buildUI()
         )
     self.ui.itemList = self.ui.leftColumn:addList()
         :onKey(function(list, event, key)
-                index = list:getItemIndex()
-            if key == 264 --down
+            basalt.debug("key press on list", key)
+            index = list:getItemIndex()
+            if key == 264 or key == 74 then --down
                 list:selectItem(index + 1)
-            elseif key == 265 -- up
+            elseif key == 265 or key == 75 then -- up
                 list:selectItem(index - 1)
             end
         end)
