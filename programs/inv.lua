@@ -33,7 +33,7 @@ end
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
-    main:onKey(function(main, event, key)
+    self.ui.main:onKey(function(main, event, key)
             basalt.debug("key press on main", key)
             list_index = self.ui.itemList:getItemIndex()
             if key == 264 or key == 74 then --down
