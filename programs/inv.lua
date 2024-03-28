@@ -15,34 +15,10 @@ inv = {
     item_list = {}
 }
 
-function inv:removeRowFromItemDistances(input, event, key)
-    log("removing from distance table", self.item_list[1].search_distance.table)
-    for _, item in pairs(self.items) do
-        for i = #self.search_term+1, #input:getValue(), -1 do
-            local num_rows = #item.search_distance.table
-            local num_columns = #item.search_distance.table[#item.search_distance.table]
-            if num_rows == 1 then
-                basalt.debug("nothing to delete from distance table")
-            else
-                table.remove(item.search_distance.table, num_rows)
-                item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
-            end
-        end
-    end
-end
-
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
-    self.ui.flex:onKey(function(flex, event, key)
-            basalt.debug("key press on flex", key)
-            list_index = self.ui.itemList:getItemIndex()
-            if key == 264 or key == 74 then --down
-                self.ui.itemList:selectItem(index + 1)
-            elseif key == 265 or key == 75 then -- up
-                self.ui.itemList:selectItem(index - 1)
-            end
-        end)
+    self.ui.flex:onKey()
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn
@@ -74,6 +50,35 @@ function inv:buildUI()
     self.ui.itemName = self.ui.rightColumn:addLabel():setText("placeholder"):setFontSize(1)
 
     basalt.autoUpdate()
+end
+
+function inv:handleKeyboardInput(flex, event, key)
+    basalt.debug("key press on flex", key)
+    if key == 83 or key == 70 then -- search
+        self.ui.itemSearch:setFocus()
+    elseif key == 264 or key == 74 then --down
+        list_index = self.ui.itemList:getItemIndex()
+        self.ui.itemList:selectItem(index + 1)
+    elseif key == 265 or key == 75 then -- up
+        list_index = self.ui.itemList:getItemIndex()
+        self.ui.itemList:selectItem(index - 1)
+    end
+end
+
+function inv:removeRowFromItemDistances(input, event, key)
+    log("removing from distance table", self.item_list[1].search_distance.table)
+    for _, item in pairs(self.items) do
+        for i = #self.search_term+1, #input:getValue(), -1 do
+            local num_rows = #item.search_distance.table
+            local num_columns = #item.search_distance.table[#item.search_distance.table]
+            if num_rows == 1 then
+                basalt.debug("nothing to delete from distance table")
+            else
+                table.remove(item.search_distance.table, num_rows)
+                item.search_distance.distance = item.search_distance.table[num_rows-1][num_columns]
+            end
+        end
+    end
 end
 
 function inv:updateItemSearchDistance()
