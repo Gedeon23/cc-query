@@ -33,8 +33,9 @@ end
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
-    self.ui.main:onKey(function(main, event, key)
-            basalt.debug("key press on main", key)
+    self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
+    self.ui.flex:onKey(function(flex, event, key)
+            basalt.debug("key press on flex", key)
             list_index = self.ui.itemList:getItemIndex()
             if key == 264 or key == 74 then --down
                 self.ui.itemList:selectItem(index + 1)
@@ -42,7 +43,6 @@ function inv:buildUI()
                 self.ui.itemList:selectItem(index - 1)
             end
         end)
-    self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn
