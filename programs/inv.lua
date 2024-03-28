@@ -33,6 +33,15 @@ end
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
+    main:onKey(function(main, event, key)
+            basalt.debug("key press on main", key)
+            list_index = self.ui.itemList:getItemIndex()
+            if key == 264 or key == 74 then --down
+                self.ui.itemList:selectItem(index + 1)
+            elseif key == 265 or key == 75 then -- up
+                self.ui.itemList:selectItem(index - 1)
+            end
+        end)
     self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
@@ -58,15 +67,6 @@ function inv:buildUI()
             end
         )
     self.ui.itemList = self.ui.leftColumn:addList()
-        :onKey(function(list, event, key)
-            basalt.debug("key press on list", key)
-            index = list:getItemIndex()
-            if key == 264 or key == 74 then --down
-                list:selectItem(index + 1)
-            elseif key == 265 or key == 75 then -- up
-                list:selectItem(index - 1)
-            end
-        end)
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
     end
