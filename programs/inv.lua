@@ -24,10 +24,9 @@ function inv:buildUI()
         :setSize("parent.w", "parent.h")
         :onKey(self:handleKeyboardInput(flex, event, key))
         :setFocus()
+    
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column")
         :setSpacing(0)
-        :setSize("parent.w * 0.5", "parent.h")
-    self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
         :setSize("parent.w * 0.5", "parent.h")
     self.ui.itemSearch = self.ui.leftColumn
         :addInput()
@@ -55,7 +54,13 @@ function inv:buildUI()
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
     end
 
-    self.ui.itemName = self.ui.rightColumn:addLabel():setText("placeholder"):setFontSize(1)
+    self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
+        :setSize("parent.w * 0.5", "parent.h")
+        :setPosition("parent.w * 0.5", 0)
+
+    self.ui.itemName = self.ui.rightColumn:addLabel():setText("item name"):setFontSize(1)
+    self.ui.itemCount = self.ui.rightColumn:addLabel():setText("item count")
+    self.ui.getStackButton = self.ui.rightColumn:addButton():setText("get stack"):onClick(function(button, event, key, x, y) basalt.debug("button clicked") end)
 
     basalt.autoUpdate()
 end
