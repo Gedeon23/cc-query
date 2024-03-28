@@ -24,8 +24,11 @@ function inv:buildUI()
         :setSize("parent.w", "parent.h")
         :onKey(self:handleKeyboardInput(flex, event, key))
         :setFocus()
-    self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
+    self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column")
+        :setSpacing(0)
+        :setSize("parent.w * 0.5", "parent.h")
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
+        :setSize("parent.w * 0.5", "parent.h")
     self.ui.itemSearch = self.ui.leftColumn
         :addInput()
         :setInputType("text")
@@ -101,7 +104,7 @@ function inv:updateItemSearchDistance()
                 d[i+1][j+1] = min(d[i][j]+a, d[i][j+1]+1, d[i+1][j]+1)
             end
         end
-        item.search_distance.distance = d[#new_search_term+1][#item.name+1]
+        item.search_distance.distance = d[#new_search_term+1][#item.name+1] -- #TODO fix nil value
     end
 end
 
