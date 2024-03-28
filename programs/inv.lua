@@ -89,7 +89,13 @@ end
 function inv:updateItemList(input, event, key)
     basalt.debug(key, " pressed input updated ", input:getValue())
     self.ui.itemList:clear()
-    local compare = function(a, b) return a.search_distance.distance < b.search_distance.distance end
+    local compare = function(a, b)
+        a.search_distance.contains_keyword ~= string.find(a.name, input:getValue())
+        b.search_distance.contains_keyword ~= string.find(b.name, input:getValue())
+        val_a = a.search_distance.distance + if a.search_distance.contains_keyword then 0 else 3 end
+        val_b = b.search_distance.distance + if b.search_distance.contains_keyword then 0 else 3 end
+        return val_a < val_b
+    end
     table.sort(self.item_list, compare)
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
