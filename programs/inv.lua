@@ -17,8 +17,13 @@ inv = {
 
 function inv:buildUI()
     self.ui.main = basalt.createFrame()
-    self.ui.flex = self.ui.main:addFlexbox():setDirection("row"):setWrap("wrap"):setPosition(1,1):setSize("parent.w", "parent.h")
-    self.ui.flex:onKey(self:handleKeyboardInput(flex, event, key))
+    self.ui.flex = self.ui.main:addFlexbox()
+        :setDirection("row")
+        :setWrap("wrap")
+        :setPosition(1,1)
+        :setSize("parent.w", "parent.h")
+        :onKey(self:handleKeyboardInput(flex, event, key))
+        :setFocus()
     self.ui.leftColumn = self.ui.flex:addFlexbox():setDirection("column"):setSpacing(0)
     self.ui.rightColumn = self.ui.flex:addFlexbox():setDirection("column")
     self.ui.itemSearch = self.ui.leftColumn
