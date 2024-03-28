@@ -88,13 +88,9 @@ end
 
 function inv:updateItemList(input, event, key)
     basalt.debug(key, " pressed input updated ", input:getValue())
-    inv.ui.itemList:clear()
-    local compare = function(item) return item.search_distance.distance end
-    if #input:getValue() < 3 then
-        self:quicksortItems(compare)
-    else
-        self:bubblesortItems(compare)
-    end
+    self.ui.itemList:clear()
+    local compare = function(a, b) return a.search_distance.distance < b.search_distance.distance end
+    table.sort(self.item_list, compare)
     for _, item in pairs(self.item_list) do
         self.ui.itemList:addItem(item.name.." "..item.count, self.ui.colors.bg, self.ui.colors.text, item)
     end
