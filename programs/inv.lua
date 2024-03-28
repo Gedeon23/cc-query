@@ -90,22 +90,16 @@ function inv:updateItemList(input, event, key)
     basalt.debug(key, " pressed input updated ", input:getValue())
     self.ui.itemList:clear()
     local compare = function(a, b)
-        local contained_val
-        a.search_distance.contains_keyword = not string.find(a.name, input:getValue())
-        if a.search_distance.contains_keyword then 
-            contained_val = 0 
-        else 
-            contained_val = 3 
+        local getVal = function(a)
+            local contained_val
+            if string.find(a.name, input:getValue()) then
+                contained_val = 0
+            else 
+                contained_val = 5
+            end
+            return a.search_distance.distance + contained_val
         end
-        val_a = a.search_distance.distance + contained_val
-        b.search_distance.contains_keyword = not string.find(b.name, input:getValue())
-        if b.search_distance.contains_keyword then 
-            contained_val = 0 
-        else 
-            contained_val = 3 
-        end
-        val_b = b.search_distance.distance + contained_val
-        return val_a < val_b
+        return getVal(a) < getVal(b)
     end
     table.sort(self.item_list, compare)
     for _, item in pairs(self.item_list) do
